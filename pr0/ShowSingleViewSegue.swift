@@ -11,38 +11,52 @@ import UIKit
 class ShowSingleViewSegue: UIStoryboardSegue {
 
   override func perform() {
-    // Assign the source and destination views to local variables.
+    let api = API.sharedInstance
     
     let destination = (self.destination as! SingleViewController)
     let source = (self.source as! GalleryViewController)
     
     let container = source.parent as! ContainerController
 
-    let galleryView = source.view!
-    let singleView = destination.view!
+    _ = container.childViewControllers.map({
+      if let _ = $0 as? SingleViewController {
+        $0.removeFromParentViewController()
+      }
+    })
     
     let screenWidth = UIScreen.main.bounds.size.width
     let screenHeight = UIScreen.main.bounds.size.height
     
+    destination.willMove(toParentViewController: container)
     container.addChildViewController(destination)
     
-    container.containerSingle.subviews[0].removeFromSuperview()
-    container.containerSingle.addSubview(singleView)
+    let _ = container.singleContainer.subviews.map({
+      $0.removeFromSuperview()
+    })
     
-    let imageView = UIImageView(image: destination.initImage)
-    imageView.contentMode = .scaleAspectFit
-    destination.contentView.addSubview(imageView)
+    container.singleContainer.addSubview(destination.view)
+    let singleController = container.singleController!
     
-    container.containerSingle.frame = destination.initSize!
-    container.containerSingle.clipsToBounds = true
+    singleController.view.frame = destination.initSize!
+    singleController.view.clipsToBounds = true
     
-    // swap container
-    container.containerSingle.removeFromSuperview()
-    container.view.addSubview(container.containerSingle)
+    singleController.imageView.image = destination.initImage
+    singleController.imageView.frame = CGRect(origin: CGPoint.zero, size: destination.initSize!.size)
+    
+		container.showSingle()
+    
+    let desiredImageWidth = screenWidth - 16
+    
+    api.itemService.getItemContent(forItem: destination.item, cb: { data in
+      singleController.handleData(data)
+    })
+    
+    (container.tabBarController! as! TabController).isVisible = false
     
     UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseOut, animations: { () -> Void in
-      imageView.frame = CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight)
-      container.containerSingle.frame = CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight)
+      //imageView.frame = CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight)
+      singleController.view.frame = CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight)
+      singleController.imageView.frame = CGRect(x: 8, y: 75, width: desiredImageWidth, height: desiredImageWidth)
       
     }) { (Finished) -> Void in
       destination.didMove(toParentViewController: container)

@@ -12,6 +12,8 @@ import UIKit
 class GalleryPostCell: UICollectionViewCell {
   @IBOutlet var postPreview: UIImageView!
   
+  var item : Item?
+  
   override func prepareForReuse() {
     super.prepareForReuse()
   }

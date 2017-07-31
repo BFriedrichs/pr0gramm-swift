@@ -37,6 +37,14 @@ struct ItemOption {
     self.init(flags: flags, promoted: promoted)
     self.newer = older
   }
+  
+  mutating func setOlder(thanItem item: Item) {
+    self.older = item.isPromoted ? item.promoted : item.id
+  }
+  
+  mutating func setNewer(thanItem item: Item) {
+    self.newer = item.isPromoted ? item.promoted : item.id
+  }
 }
 
 extension ItemOption: Equatable {}

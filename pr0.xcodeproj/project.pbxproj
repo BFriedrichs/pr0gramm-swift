@@ -37,6 +37,10 @@
 		116E89DB1F2EAC78003A69F2 /* URLService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116E89CF1F2EAC78003A69F2 /* URLService.swift */; };
 		116E89DC1F2EAC78003A69F2 /* UserStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116E89D01F2EAC78003A69F2 /* UserStatus.swift */; };
 		11DA5ADF1F2BE1600014E09D /* GalleryPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DA5ADE1F2BE15F0014E09D /* GalleryPostCell.swift */; };
+		11F5FB421F2F5E2C00A12467 /* MediaType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F5FB411F2F5E2C00A12467 /* MediaType.swift */; };
+		11F5FB441F2F7FDA00A12467 /* GifImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F5FB431F2F7FDA00A12467 /* GifImage.swift */; };
+		11F5FB481F2FBB3C00A12467 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F5FB471F2FBB3C00A12467 /* ActivityIndicator.swift */; };
+		11F5FB4A1F2FC3B800A12467 /* Dialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F5FB491F2FC3B800A12467 /* Dialog.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +76,10 @@
 		116E89CF1F2EAC78003A69F2 /* URLService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLService.swift; sourceTree = "<group>"; };
 		116E89D01F2EAC78003A69F2 /* UserStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserStatus.swift; sourceTree = "<group>"; };
 		11DA5ADE1F2BE15F0014E09D /* GalleryPostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GalleryPostCell.swift; sourceTree = "<group>"; };
+		11F5FB411F2F5E2C00A12467 /* MediaType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaType.swift; sourceTree = "<group>"; };
+		11F5FB431F2F7FDA00A12467 /* GifImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GifImage.swift; sourceTree = "<group>"; };
+		11F5FB471F2FBB3C00A12467 /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
+		11F5FB491F2FC3B800A12467 /* Dialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dialog.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +160,9 @@
 				113F46CB1F2CEDB600693415 /* MultiSelect */,
 				113F46B91F2CB0C700693415 /* Color.swift */,
 				113E99EA1F2DE80C005BF76A /* Helper.swift */,
+				11F5FB431F2F7FDA00A12467 /* GifImage.swift */,
+				11F5FB471F2FBB3C00A12467 /* ActivityIndicator.swift */,
+				11F5FB491F2FC3B800A12467 /* Dialog.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -164,6 +175,7 @@
 				116E89DF1F2EAC8B003A69F2 /* Models */,
 				116E89C51F2EAC78003A69F2 /* API.swift */,
 				116E89C71F2EAC78003A69F2 /* Connection.swift */,
+				11F5FB411F2F5E2C00A12467 /* MediaType.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -337,6 +349,7 @@
 				113E99EB1F2DE80C005BF76A /* Helper.swift in Sources */,
 				116E89DB1F2EAC78003A69F2 /* URLService.swift in Sources */,
 				116E89D81F2EAC78003A69F2 /* ItemStore.swift in Sources */,
+				11F5FB441F2F7FDA00A12467 /* GifImage.swift in Sources */,
 				116E89D11F2EAC78003A69F2 /* API.swift in Sources */,
 				113E99F71F2E2638005BF76A /* ShowGalleryViewSegue.swift in Sources */,
 				11DA5ADF1F2BE1600014E09D /* GalleryPostCell.swift in Sources */,
@@ -345,12 +358,15 @@
 				1100AC891F26896500428CBF /* GalleryViewController.swift in Sources */,
 				113F46BC1F2CC1D800693415 /* SettingsStore.swift in Sources */,
 				116E89D31F2EAC78003A69F2 /* Connection.swift in Sources */,
+				11F5FB421F2F5E2C00A12467 /* MediaType.swift in Sources */,
 				116E89D21F2EAC78003A69F2 /* Comment.swift in Sources */,
+				11F5FB4A1F2FC3B800A12467 /* Dialog.swift in Sources */,
 				113F46CF1F2CEDC300693415 /* ATHMultiSelectionSegmentedControl.swift in Sources */,
 				116E89D51F2EAC78003A69F2 /* Item.swift in Sources */,
 				1100AC871F26896500428CBF /* AppDelegate.swift in Sources */,
 				116E89DC1F2EAC78003A69F2 /* UserStatus.swift in Sources */,
 				113E99EE1F2E0D0B005BF76A /* SingleViewController.swift in Sources */,
+				11F5FB481F2FBB3C00A12467 /* ActivityIndicator.swift in Sources */,
 				113F46CE1F2CEDC300693415 /* ATHMultiSelectionControlSegmentButton.swift in Sources */,
 				116E89D41F2EAC78003A69F2 /* FlagStatus.swift in Sources */,
 			);

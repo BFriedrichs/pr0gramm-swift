@@ -12,7 +12,7 @@ typealias loadCheck = (id: Int64, isLoaded: Bool)
 
 class GalleryViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
   
-  let api = API()
+  let api = API.sharedInstance
   
   let reuseIdentifier = "galleryPostCell"
   let padding : CGFloat = 3
@@ -32,9 +32,6 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
     
     let size = view.frame.width / 3 - padding
     galleryPostLayout.itemSize = CGSize(width: size, height: size)
-  	galleryPostLayout.sectionInset = UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding)
-    galleryPostLayout.minimumLineSpacing = 1.0
-    galleryPostLayout.minimumInteritemSpacing = 1.0
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -42,7 +39,7 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
     
     let option = settings.generateOption()
     
-    if api.itemService.itemStorage.getFilteredContent(withOption: settings.generateOption()).count == 0 {
+    if !api.itemStore.isCached(option: option) {
       api.itemService.getItems(withOptions: option, cb: { items in
         self.updateGallery()
       })
@@ -57,8 +54,8 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
   }
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    print(api.itemService.itemStorage.getFilteredContent(withOption: settings.generateOption()).count)
-    return api.itemService.itemStorage.getFilteredContent(withOption: settings.generateOption()).count
+    print(api.itemStore.getFilteredContent(withOption: settings.generateOption()).count)
+    return api.itemStore.getFilteredContent(withOption: settings.generateOption()).count
   }
 
   // make a cell for each cell index path
@@ -71,10 +68,11 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
 
     let index = indexPath[1]
     let option = settings.generateOption()
-    let posts = api.itemService.itemStorage.getFilteredContent(withOption: option)
+    let posts = api.itemStore.getFilteredContent(withOption: option)
     if posts.count >= index {
       let post = posts[index]
-
+			cell.item = post
+      
       api.itemService.getItemThumb(forItem: post, cb: { imageData in
         let image = UIImage.init(data: imageData)
         
@@ -114,7 +112,7 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
     let offsetBottom = contentHeight - offsetTop - viewHeight
     
     if offsetBottom < viewHeight {
-      let oldestItem = api.itemService.itemStorage.getOldestItem(withOptions: settings.generateOption())
+      let oldestItem = api.itemStore.getOldestItem(withOptions: settings.generateOption())
       if oldestItem != nil {
         var newOption = settings.generateOption()
         newOption.older = settings.promoted ? oldestItem!.promoted : oldestItem!.id
@@ -135,15 +133,11 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if segue.identifier == "SingleViewSegue" {
-      if let indexPaths = self.galleryView.indexPathsForSelectedItems {
-        let indexPath = indexPaths[0]
-        
-        let cell = self.galleryView.cellForItem(at: indexPath) as! GalleryPostCell
-        let segue = segue.destination as! SingleViewController
-       	segue.initSize = cell.frame.applying(CGAffineTransform.init(translationX: 0, y: -galleryView.contentOffset.y))
-        print(segue.initSize)
-        segue.initImage = cell.postPreview.image
-      }
+      let cell = sender as! GalleryPostCell
+      let segue = segue.destination as! SingleViewController
+      segue.initSize = cell.frame.applying(CGAffineTransform.init(translationX: 0, y: -galleryView.contentOffset.y))
+      segue.initImage = cell.postPreview.image
+      segue.item = cell.item
     }
   }
 }

@@ -11,11 +11,20 @@ import Foundation
 extension Array where Element: Storeable {
   func contains(_ element: Element) -> Bool {
     for e in self {
-      if(e.id == element.id) {
+      if e.id == element.id {
         return true
       }
     }
     return false
+  }
+  
+  func index(_ element: Element) -> Int? {
+    for (i, e) in self.enumerated() {
+      if e.id == element.id {
+        return i
+      }
+    }
+    return nil
   }
 }
 

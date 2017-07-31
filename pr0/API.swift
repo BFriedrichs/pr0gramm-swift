@@ -9,11 +9,15 @@
 import Foundation
 
 class API {
-  
+  static let sharedInstance = API()
 
   let itemService : ItemService
   
-  init() {
+  let itemStore: ItemStore
+  
+  fileprivate init() {
     self.itemService = ItemService()
+    
+    self.itemStore = ItemStore.sharedInstance
   }
 }

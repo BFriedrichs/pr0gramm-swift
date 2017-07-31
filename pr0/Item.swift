@@ -21,7 +21,8 @@ class Item: Storeable {
   var createdDate: Date
   
   var image: String
-  var imageData: Data?
+  var contentData: Data?
+  var mediaType: MediaType
   
   var thumb: String
   var thumbData: Data?
@@ -55,6 +56,8 @@ class Item: Storeable {
     self.thumb = data["thumb"] as! String
     self.fullsize = data["fullsize"] as! String
     
+    self.mediaType = MediaType.getMediaType(forURL: self.image)
+
     self.width = data["width"] as! Int
     self.height = data["height"] as! Int
     

@@ -11,8 +11,6 @@ import UIKit
 
 class ShowGalleryViewSegue: UIStoryboardSegue {
   override func perform() {
-    // Assign the source and destination views to local variables.
-    
     let destination = (self.destination as! GalleryViewController)
     let source = (self.source as! SingleViewController)
     
@@ -24,7 +22,11 @@ class ShowGalleryViewSegue: UIStoryboardSegue {
     let screenWidth = UIScreen.main.bounds.size.width
     let screenHeight = UIScreen.main.bounds.size.height
     
+    container.tabBarController?.tabBar.isHidden = false
+    
     secondView.frame = CGRect(x: 0, y: screenHeight, width: screenWidth, height: screenHeight)
+    
+    (container.tabBarController! as! TabController).isVisible = true
     
     UIView.animate(withDuration: 0.25, animations: { () -> Void in
       firstView.frame = CGRect(x: 0, y: screenHeight, width: screenWidth, height: screenHeight)
@@ -32,8 +34,9 @@ class ShowGalleryViewSegue: UIStoryboardSegue {
       
     }) { (Finished) -> Void in
       // swap container
-      container.containerGallery.removeFromSuperview()
-      container.view.addSubview(container.containerGallery)
+      container.showGallery()
+      
+			source.cleanupVideo()
       
       source.removeFromParentViewController()
     }

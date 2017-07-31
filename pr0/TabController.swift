@@ -10,6 +10,23 @@ import Foundation
 import UIKit
 
 class TabController: UITabBarController, UITabBarControllerDelegate{
+  
+  var _isVisible = true
+  var isVisible: Bool {
+    get {
+      return _isVisible
+    }
+    set {
+      if _isVisible != newValue {
+        _isVisible = newValue
+        let direction: CGFloat = newValue ? -1 : 1
+        UIView.animate(withDuration: 0.25, delay: 0.18, animations: {
+          self.tabBar.frame.origin = CGPoint(x: 0, y: self.tabBar.frame.minY + self.tabBar.frame.height * direction)
+        })
+      }
+    }
+  }
+  
   override func viewDidLoad() {
     self.delegate = self
     
@@ -17,7 +34,6 @@ class TabController: UITabBarController, UITabBarControllerDelegate{
 
     deleteUnusedViews()
   }
-
   
   func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
     let tabViewControllers = tabBarController.viewControllers!
@@ -47,9 +63,6 @@ class TabController: UITabBarController, UITabBarControllerDelegate{
     toView.frame = CGRect(x: startAt, y: 0, width: screenWidth, height: screenHeight)
     
     fromView.frame = CGRect(x: -startAt, y: 0, width: screenWidth, height: screenHeight)
-    
-    let window = UIApplication.shared.keyWindow
-    window?.insertSubview(toView, belowSubview: fromView)
 
     UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 2.5, options: .curveEaseOut, animations: { () -> Void in
       toView.frame = CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight)

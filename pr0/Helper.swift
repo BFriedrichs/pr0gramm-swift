@@ -17,3 +17,9 @@ extension Array where Element: Equatable {
     }
   }
 }
+
+extension UIView {
+  func deepCopy__EXPENSIVE() -> UIView {
+    return NSKeyedUnarchiver.unarchiveObject(with: NSKeyedArchiver.archivedData(withRootObject: self)) as! UIView
+  }
+}
