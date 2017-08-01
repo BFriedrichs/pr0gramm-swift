@@ -15,9 +15,14 @@ class SettingsViewController: UIViewController, MultiSelectionSegmentedControlDe
     settings.promoted = sender.selectedSegmentIndex == 1 ? true : false
   }
   
+  @IBAction func autoplayChanged(_ sender: UISegmentedControl) {
+    settings.autoplay = sender.selectedSegmentIndex == 1 ? false : true
+  }
+  
   @IBOutlet var flagContainer: UIView!
   @IBOutlet var topicSelect: UISegmentedControl!
-  
+  @IBOutlet var autoPlaySelect: UISegmentedControl!
+
   var flagSelect : MultiSelectionSegmentedControl!
   var flagMapping = [FlagStatus.SFW, FlagStatus.NSFW, FlagStatus.NSFL]
   
@@ -37,6 +42,7 @@ class SettingsViewController: UIViewController, MultiSelectionSegmentedControlDe
     flagContainer.addSubview(flagSelect)
     
     topicSelect.selectedSegmentIndex = settings.promoted ? 1 : 0
+    autoPlaySelect.selectedSegmentIndex = settings.autoplay ? 0 : 1
   }
   
   override func viewWillAppear(_ animated: Bool) {

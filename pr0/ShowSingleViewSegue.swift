@@ -11,6 +11,7 @@ import UIKit
 class ShowSingleViewSegue: UIStoryboardSegue {
 
   override func perform() {
+    ActivityIndicator.show()
     let api = API.sharedInstance
     
     let destination = (self.destination as! SingleViewController)
@@ -47,8 +48,10 @@ class ShowSingleViewSegue: UIStoryboardSegue {
     
     let desiredImageWidth = screenWidth - 16
     
+
     api.itemService.getItemContent(forItem: destination.item, cb: { data in
       singleController.handleData(data)
+      ActivityIndicator.hide()
     })
     
     (container.tabBarController! as! TabController).isVisible = false

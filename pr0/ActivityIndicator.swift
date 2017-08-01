@@ -20,6 +20,15 @@ class ActivityIndicator {
   private init() {
    
     activity = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
+    activity.color = Color.Highlight
+
+    let backgroundView = UIView()
+    backgroundView.backgroundColor = Color.Back.withAlphaComponent(0.8)
+		backgroundView.frame = CGRect(x: -size / 2, y: -size / 2, width: size * 2, height: size * 2)
+    backgroundView.layer.cornerRadius = 10
+    backgroundView.layer.masksToBounds = true
+    
+    activity.insertSubview(backgroundView, at: 0)
     
     let x = UIScreen.main.bounds.width
     let y = UIScreen.main.bounds.height

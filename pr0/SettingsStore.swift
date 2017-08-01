@@ -11,11 +11,11 @@ import Foundation
 final class SettingsStore {
   static let sharedInstance = SettingsStore()
   
-  static let FILTER_CHANGED = "filter_changed"
+  static let AUDIO_CHANGED = "audio_toggled"
   
   let storage = UserDefaults.standard
   
-  var filter : Set<FlagStatus> {
+  var filter: Set<FlagStatus> {
     didSet {
       let filterArray = filter.map({ return $0.rawValue })
       storage.set(filterArray, forKey: "filter")
@@ -23,9 +23,24 @@ final class SettingsStore {
     }
   }
   
-  var promoted : Bool {
+  var promoted: Bool {
     didSet {
       storage.set(promoted, forKey: "promoted")
+      storage.synchronize()
+    }
+  }
+  
+  var autoplay: Bool {
+    didSet {
+      storage.set(autoplay, forKey: "autoplay")
+      storage.synchronize()
+    }
+  }
+  
+  var audio: Bool {
+    didSet {
+      NotificationCenter.default.post(name: Notification.Name(rawValue: SettingsStore.AUDIO_CHANGED), object: nil)
+      storage.set(audio, forKey: "audio")
       storage.synchronize()
     }
   }
@@ -40,6 +55,8 @@ final class SettingsStore {
     self.filter = Set<FlagStatus>(filterArray.map { FlagStatus(rawValue: $0) } as! [FlagStatus])
 
     self.promoted = storage.value(forKey: "promoted") as? Bool ?? true
+    self.autoplay = storage.value(forKey: "autoplay") as? Bool ?? true
+    self.audio = storage.value(forKey: "audio") as? Bool ?? true
   }
 	
 }

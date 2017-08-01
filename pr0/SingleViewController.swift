@@ -21,11 +21,21 @@ class SingleViewController: UIViewController, UIScrollViewDelegate {
   var initImage: UIImage!
   var item: Item!
   
+  let settings = SettingsStore.sharedInstance
+  
+  var cachedItem: AVPlayerItem?
+  
   var willClose = false
+  var isAnimating = false
+  
   var isZoomed: Bool {
     return contentView.zoomScale != CGFloat(1)
   }
+  
   var videoController: AVPlayerViewController!
+  var hasVideo: Bool {
+    return self.videoController != nil && self.videoController!.player != nil
+  }
   
   let api = API.sharedInstance
   
@@ -34,24 +44,51 @@ class SingleViewController: UIViewController, UIScrollViewDelegate {
     
     self.navigationItem.hidesBackButton = true
     
-    contentView.minimumZoomScale = 0.5;
-    contentView.maximumZoomScale = 6.0;
+    let gesture = UITapGestureRecognizer(target: self, action:  #selector (self.tappedVideo(sender:)))
+    videoView.addGestureRecognizer(gesture)
+    
     contentView.decelerationRate = UIScrollViewDecelerationRateFast
+    
+    NotificationCenter.default.addObserver(self, selector: #selector(setAudio), name: Notification.Name(rawValue: SettingsStore.AUDIO_CHANGED), object: nil)
+    
     updateScrollViewSize()
+  }
+  
+  func setAudio() {
+    if videoController != nil && videoController!.player != nil {
+      videoController.player!.isMuted = !settings.audio
+    }
+  }
+  
+  func tappedVideo(sender: UITapGestureRecognizer) {
+    print("tapped video")
+    if hasVideo {
+      guard videoController.player!.currentItem == nil else {
+        return
+      }
+      
+      videoController.player!.replaceCurrentItem(with: cachedItem)
+      cachedItem = nil
+      videoController.player!.play()
+      videoController.view.isUserInteractionEnabled = true
+      self.videoView.isHidden = false
+      self.imageView.isHidden = true
+    }
   }
   
   func handleData(_ data: Data) {
     let type = item.mediaType
     if type.mediaGroup == .ImageType {
-      
+      self.unlockZoom()
       let image = UIImage.generateImage(fromType: type, withData: data)
       
-      let desiredImageWidth = view.frame.width - 16
+      let desiredImageWidth = UIScreen.main.bounds.width - 16
       
       let aspect = image.size.height / image.size.width
       
       self.videoView.isHidden = true
       self.imageView.isHidden = false
+      
       DispatchQueue.main.async {
         self.imageView.frame = CGRect(x: 8, y: 75, width: desiredImageWidth, height: desiredImageWidth * aspect)
         
@@ -60,6 +97,7 @@ class SingleViewController: UIViewController, UIScrollViewDelegate {
         self.updateScrollViewSize()
       }
     } else if type.mediaGroup == .VideoType {
+      self.lockZoom()
       initPlayer()
     }
   }
@@ -67,10 +105,12 @@ class SingleViewController: UIViewController, UIScrollViewDelegate {
   func initPlayer() {
     videoController = AVPlayerViewController()
     addChildViewController(videoController)
-    
+
     let url = URL(string: "https://img.pr0gramm.com/\(item.image)")
     let videoPlayer = AVPlayer(url: url!)
     videoController.player = videoPlayer
+    videoController.allowsPictureInPicturePlayback = true
+  	setAudio()
     
     let size = videoPlayer.currentItem!.asset.tracks(withMediaType: AVMediaTypeVideo)[0].naturalSize
     let aspect = size.height / size.width
@@ -86,15 +126,37 @@ class SingleViewController: UIViewController, UIScrollViewDelegate {
       desiredVideoWidth = desiredVideoHeight / aspect
       x = (screenSize.width - desiredVideoWidth) / 2
     }
-    
-    self.videoView.isHidden = false
-    self.imageView.isHidden = true
-    
-    DispatchQueue.main.async {
-    	self.videoView.frame = CGRect(x: x, y: 75, width: desiredVideoWidth, height: desiredVideoHeight)
-    	self.videoController.view.frame = CGRect(origin: CGPoint.zero, size: self.videoView.frame.size)
 
-    	self.videoView.addSubview(self.videoController.view)
+    self.videoView.frame = CGRect(x: x, y: 75, width: desiredVideoWidth, height: desiredVideoHeight)
+    self.videoController.view.frame = CGRect(origin: CGPoint.zero, size: self.videoView.frame.size)
+    
+    if self.settings.autoplay {
+      self.videoView.isHidden = false
+      self.imageView.isHidden = true
+
+      DispatchQueue.main.async {
+        self.videoView.addSubview(self.videoController.view)
+        self.videoController.player!.play()
+      }
+    } else {
+      self.videoView.isHidden = true
+      self.imageView.isHidden = false
+      
+      self.videoController.view.isUserInteractionEnabled = false
+      self.cachedItem = self.videoController.player!.currentItem
+
+      self.videoController.player!.replaceCurrentItem(with: nil)
+
+      let width = screenSize.width - 16
+      let playView = UIImageView(image: #imageLiteral(resourceName: "playButton"))
+      playView.frame.origin = CGPoint(x: width / 2 - playView.frame.width / 2, y: width / 2 - playView.frame.height / 2)
+      playView.isUserInteractionEnabled = false
+      imageView.addSubview(playView)
+      
+      DispatchQueue.main.async {
+        self.imageView.image = UIImage(data: self.item.thumbData!)
+     	 	self.imageView.setNeedsDisplay()
+      }
     }
   }
   
@@ -103,7 +165,21 @@ class SingleViewController: UIViewController, UIScrollViewDelegate {
     for view in contentView.subviews {
       contentRect = contentRect.union(view.frame)
     }
-    contentView.contentSize = contentRect.size.applying(CGAffineTransform.init(scaleX: 0, y: 2))
+    contentView.contentSize = CGSize(width: self.view.frame.size.width, height: contentRect.size.height)
+  }
+  
+  func cleanupVideo(removeFromView remove: Bool = false) {
+    if videoController != nil {
+      if remove {
+        self.videoController.view.removeFromSuperview()
+      }
+      if videoController.player != nil {
+        videoController.player!.pause()
+        videoController.player = nil
+      }
+      
+      videoController.removeFromParentViewController()
+    }
   }
   
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -113,8 +189,13 @@ class SingleViewController: UIViewController, UIScrollViewDelegate {
     
     let offsetTop = contentView.contentOffset.y
     if view.frame.minY > 0 || offsetTop < 0 {
+      contentView.contentOffset.x = 0
       scrollView.contentOffset.y = 0
       self.view.frame = CGRect(origin: CGPoint(x: 0, y: self.view.frame.minY-offsetTop), size: self.view.frame.size)
+    }
+    
+    if view.frame.minY < 0 {
+      view.frame.origin = CGPoint.zero
     }
   }
   
@@ -133,9 +214,11 @@ class SingleViewController: UIViewController, UIScrollViewDelegate {
     
     let offsetTop = view.frame.minY
     let offsetLeft = contentView.contentOffset.x
-  	
-    if offsetLeft != 0 {
-      if offsetLeft > 0 {
+    let offsetThreshold: CGFloat = 50
+    
+    if offsetTop == 0 && offsetLeft != 0 {
+      print(offsetLeft)
+      if offsetLeft > offsetThreshold {
         print("pulled to left")
         API.sharedInstance.itemService.getNextItem(after: self.item, cb: { item in
           if item != nil {
@@ -146,7 +229,7 @@ class SingleViewController: UIViewController, UIScrollViewDelegate {
             Dialog.noOlderItem(self)
           }
         })
-      } else {
+      } else if offsetLeft < -offsetThreshold {
         print("pulled to right")
         API.sharedInstance.itemService.getPreviousItem(before: self.item, cb: { item in
           if item != nil {
@@ -168,17 +251,33 @@ class SingleViewController: UIViewController, UIScrollViewDelegate {
     }
   }
   
+  func lockZoom() {
+    contentView.maximumZoomScale = 1
+    contentView.minimumZoomScale = 1
+  }
+  
+  func unlockZoom() {
+    contentView.minimumZoomScale = 0.5;
+    contentView.maximumZoomScale = 6.0;
+  }
+  
   func viewForZooming(in scrollView: UIScrollView) -> UIView? {
     return self.imageView
   }
   
-  func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
-    contentView.setZoomScale(1, animated: true)
+  func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
+    contentView.isDirectionalLockEnabled = false
   }
   
-  var isAnimating = false
+  func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
+    if contentView.zoomScale < 1 {
+      contentView.setZoomScale(1, animated: true)
+      contentView.isDirectionalLockEnabled = true
+    }
+  }
+
   func animateBack() {
-    if !willClose && self.view.frame.minY > 0 {
+    if !willClose && self.view.frame.minY != 0 {
       UIView.animate(withDuration: 0.3, animations: { () -> Void in
         self.view.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: self.view.frame.size)
       }) { (Finished) -> Void in
@@ -186,21 +285,7 @@ class SingleViewController: UIViewController, UIScrollViewDelegate {
       }
     }
   }
-  
-  func cleanupVideo(removeFromView remove: Bool = false) {
-    if videoController != nil {
-      if remove {
-        self.videoController.view.removeFromSuperview()
-      }
-      if videoController.player != nil {
-        videoController.player!.pause()
-        videoController.player = nil
-      }
 
-      videoController.removeFromParentViewController()
-    }
-  }
-  
   func performShowNextItem(withItem item: Item) {
     ActivityIndicator.show()
     cleanupVideo(removeFromView: true)

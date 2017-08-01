@@ -9,7 +9,9 @@
 import Foundation
 import UIKit
 
-class TabController: UITabBarController, UITabBarControllerDelegate{
+class TabController: UITabBarController, UITabBarControllerDelegate {
+  
+  let settings = SettingsStore.sharedInstance
   
   var _isVisible = true
   var isVisible: Bool {
@@ -27,11 +29,23 @@ class TabController: UITabBarController, UITabBarControllerDelegate{
     }
   }
   
+  @IBOutlet var toggleAudioButton: UIBarButtonItem!
+  @IBAction func toggleAudio(_ sender: UIBarButtonItem) {
+    settings.audio = !settings.audio
+    
+    DispatchQueue.main.async {
+      sender.image = self.settings.audio ? #imageLiteral(resourceName: "audio_on") : #imageLiteral(resourceName: "audio_off")
+    }
+  }
+  
   override func viewDidLoad() {
     self.delegate = self
-    
     self.navigationController!.navigationBar.subviews.first?.alpha = 0.95
 
+    DispatchQueue.main.async {
+      self.toggleAudioButton.image = self.settings.audio ? #imageLiteral(resourceName: "audio_on") : #imageLiteral(resourceName: "audio_off")
+    }
+    
     deleteUnusedViews()
   }
   

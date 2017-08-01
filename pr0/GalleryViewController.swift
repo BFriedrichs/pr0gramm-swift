@@ -101,6 +101,40 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
     cell?.backgroundColor = Color.Back
   }
   
+  func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    if loadingNew {
+      return
+    }
+    
+    let offsetTop = scrollView.contentOffset.y
+    
+    if offsetTop < 0 {
+      let newestItem = api.itemStore.itemInCache(forIndex: 0)
+      
+      if newestItem != nil {
+        var newerOption = settings.generateOption()
+        newerOption.setNewer(thanItem: newestItem!)
+        loadingNew = true
+        ActivityIndicator.show()
+       	
+        let count = api.itemStore.sizeOfCache()!
+        
+        api.itemService.getItems(withOptions: newerOption, cb: { items in
+          ActivityIndicator.hide()
+          
+          let countNew = self.api.itemStore.sizeOfCache()!
+          
+          if count != countNew {
+            self.updateGallery()
+          }
+          
+          self.loadingNew = false
+        })
+      }
+    }
+
+  }
+  
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     if loadingNew {
       return
@@ -113,12 +147,13 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
     
     if offsetBottom < viewHeight {
       let oldestItem = api.itemStore.getOldestItem(withOptions: settings.generateOption())
+      
       if oldestItem != nil {
-        var newOption = settings.generateOption()
-        newOption.older = settings.promoted ? oldestItem!.promoted : oldestItem!.id
+        var olderOption = settings.generateOption()
+        olderOption.setOlder(thanItem: oldestItem!)
         loadingNew = true
         
-        api.itemService.getItems(withOptions: newOption, cb: { items in
+        api.itemService.getItems(withOptions: olderOption, cb: { items in
           self.updateGallery()
           self.loadingNew = false
         })
