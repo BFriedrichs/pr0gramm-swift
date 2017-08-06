@@ -17,13 +17,17 @@ class ContainerController: UIViewController {
   var galleryController: GalleryViewController?
   
   func showSingle() {
-    self.singleContainer.removeFromSuperview()
-    self.view.addSubview(singleContainer)
+    self.view.bringSubview(toFront: self.singleContainer)
+    DispatchQueue.main.async {
+      //self.singleContainer.bringSubview(toFront: self.view)
+    }
   }
   
   func showGallery() {
-    self.galleryContainer.removeFromSuperview()
-    self.view.addSubview(galleryContainer)
+    self.view.bringSubview(toFront: self.galleryContainer)
+    DispatchQueue.main.async {
+    	
+    }
   }
   
   override func addChildViewController(_ childController: UIViewController) {

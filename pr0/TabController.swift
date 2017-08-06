@@ -23,7 +23,8 @@ class TabController: UITabBarController, UITabBarControllerDelegate {
         _isVisible = newValue
         let direction: CGFloat = newValue ? -1 : 1
         UIView.animate(withDuration: 0.25, delay: 0.18, animations: {
-          self.tabBar.frame.origin = CGPoint(x: 0, y: self.tabBar.frame.minY + self.tabBar.frame.height * direction)
+          //
+          self.tabBar.frame.origin = CGPoint(x: 0, y: self.tabBar.frame.minY + (self.tabBar.frame.height + 1) * direction)
         })
       }
     }
@@ -32,20 +33,14 @@ class TabController: UITabBarController, UITabBarControllerDelegate {
   @IBOutlet var toggleAudioButton: UIBarButtonItem!
   @IBAction func toggleAudio(_ sender: UIBarButtonItem) {
     settings.audio = !settings.audio
-    
-    DispatchQueue.main.async {
-      sender.image = self.settings.audio ? #imageLiteral(resourceName: "audio_on") : #imageLiteral(resourceName: "audio_off")
-    }
+    sender.image = self.settings.audio ? #imageLiteral(resourceName: "audio_on") : #imageLiteral(resourceName: "audio_off")
   }
   
   override func viewDidLoad() {
     self.delegate = self
     self.navigationController!.navigationBar.subviews.first?.alpha = 0.95
-
-    DispatchQueue.main.async {
-      self.toggleAudioButton.image = self.settings.audio ? #imageLiteral(resourceName: "audio_on") : #imageLiteral(resourceName: "audio_off")
-    }
-    
+    self.toggleAudioButton.image = self.settings.audio ? #imageLiteral(resourceName: "audio_on") : #imageLiteral(resourceName: "audio_off")
+  
     deleteUnusedViews()
   }
   

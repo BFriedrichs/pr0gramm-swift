@@ -9,5 +9,5 @@
 import Foundation
 
 enum UserStatus: Int {
-  case DEFAULT = 0, a, b, c, d, e, f, g, h, i, j, k, l
+  case Banned = 4, Fliese = 6, Newfag = 1, Fag = 0, Donator = 9, Oldfag = 2, SecretSanta = 8, Mod = 5, Admin = 3, Legend = 7
 }

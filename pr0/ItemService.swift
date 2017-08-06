@@ -77,9 +77,12 @@ class ItemService {
     
     if item.contentData != nil {
       cb(item.contentData!)
-      self.preload(forItem: item)
+      if !preloading {
+        self.preload(forItem: item)
+      }
     } else {
       print(item.image)
+      
       let parameters = item.image
       self.contentConnection.get(withParameters: parameters, cb: { data in
         if let data = data as? Data {
@@ -162,8 +165,27 @@ class ItemService {
     cb(previousItem)
   }
 
-  func getItemComments(forItem item: Item, cb: ([Comment]) -> Void) {
+  func getItemMeta(forItem item: Item, cb: @escaping (StorageType) -> Void) {
+    let parameters = "/info?itemId=\(item.id)"
     
+    self.itemConnection.get(withParameters: parameters, parseJson: true, cb: { data in
+      let json = data as! [String: Any]
+      if let commentData = json["comments"] as? [[String: Any]] {
+        for retrievedData in commentData {
+          let comment = Comment(withData: retrievedData)
+          item.commentStore.add(comment)
+        }
+        cb(.Comment)
+      }
+      
+      if let tagData = json["tags"] as? [[String: Any]] {
+        for retrievedData in tagData {
+          let tag = Tag(withData: retrievedData)
+          item.tagStore.add(tag)
+        }
+        cb(.Tag)
+      }
+    })
   }
   
   func getItemTags(forItem item: Item, cb: ([Tag]) -> Void) {

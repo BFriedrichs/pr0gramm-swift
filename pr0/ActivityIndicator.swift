@@ -37,10 +37,8 @@ class ActivityIndicator {
   }
   
   static func show() {
-    DispatchQueue.main.async {
-      UIApplication.shared.keyWindow?.addSubview(ActivityIndicator.sharedInstance.activity)
-      ActivityIndicator.sharedInstance.activity.startAnimating()
-    }
+    UIApplication.shared.keyWindow?.addSubview(ActivityIndicator.sharedInstance.activity)
+    ActivityIndicator.sharedInstance.activity.startAnimating()
   }
   
   static func hide() {

@@ -39,6 +39,9 @@ class Item: Storeable {
   var user: String
   var mark: UserStatus
   
+  var commentStore = CommentStore()
+  var tagStore = TagStore()
+  
   init(withData data: [String: Any]) {
     self.id = data["id"] as! Double
     self.promoted = data["promoted"] as! Double

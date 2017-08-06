@@ -33,6 +33,10 @@ protocol Storeable {
 }
 
 class Store<T: Storeable> {
+  var size: Int {
+    return storage.count
+  }
+  
   var storage = [T]()
   
   init() {

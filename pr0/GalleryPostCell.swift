@@ -16,5 +16,10 @@ class GalleryPostCell: UICollectionViewCell {
   
   override func prepareForReuse() {
     super.prepareForReuse()
+    
+    DispatchQueue.main.async {
+      self.postPreview.image = nil
+      self.postPreview.setNeedsDisplay()
+    }
   }
 }

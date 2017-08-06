@@ -27,9 +27,6 @@ class GalleryViewController: UIViewController, UICollectionViewDataSource, UICol
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    galleryView.isPrefetchingEnabled = true
-    galleryView.allowsMultipleSelection = false
-    
     let size = view.frame.width / 3 - padding
     galleryPostLayout.itemSize = CGSize(width: size, height: size)
   }

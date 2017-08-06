@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 final class SettingsStore {
   static let sharedInstance = SettingsStore()
@@ -14,6 +15,17 @@ final class SettingsStore {
   static let AUDIO_CHANGED = "audio_toggled"
   
   let storage = UserDefaults.standard
+  
+  let _width = UIScreen.main.bounds.width
+  let _height = UIScreen.main.bounds.height
+  
+  var width: CGFloat {
+    return _width
+  }
+  
+  var height: CGFloat {
+    return _height
+  }
   
   var filter: Set<FlagStatus> {
     didSet {

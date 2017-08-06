@@ -28,6 +28,8 @@ class ShowSingleViewSegue: UIStoryboardSegue {
     let screenWidth = UIScreen.main.bounds.size.width
     let screenHeight = UIScreen.main.bounds.size.height
     
+    //destination.view.translatesAutoresizingMaskIntoConstraints = false
+    
     destination.willMove(toParentViewController: container)
     container.addChildViewController(destination)
     
@@ -37,18 +39,18 @@ class ShowSingleViewSegue: UIStoryboardSegue {
     
     container.singleContainer.addSubview(destination.view)
     let singleController = container.singleController!
+    singleController.resetView()
     
     singleController.view.frame = destination.initSize!
     singleController.view.clipsToBounds = true
     
     singleController.imageView.image = destination.initImage
-    singleController.imageView.frame = CGRect(origin: CGPoint.zero, size: destination.initSize!.size)
+    //singleController.imageView.frame = CGRect(origin: CGPoint.zero, size: destination.initSize!.size)
     
 		container.showSingle()
     
-    let desiredImageWidth = screenWidth - 16
+   let desiredImageWidth = screenWidth - 16
     
-
     api.itemService.getItemContent(forItem: destination.item, cb: { data in
       singleController.handleData(data)
       ActivityIndicator.hide()
@@ -59,7 +61,7 @@ class ShowSingleViewSegue: UIStoryboardSegue {
     UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseOut, animations: { () -> Void in
       //imageView.frame = CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight)
       singleController.view.frame = CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight)
-      singleController.imageView.frame = CGRect(x: 8, y: 75, width: desiredImageWidth, height: desiredImageWidth)
+      singleController.imageView.frame = CGRect(x: 0, y: 0, width: desiredImageWidth, height: desiredImageWidth)
       
     }) { (Finished) -> Void in
       destination.didMove(toParentViewController: container)

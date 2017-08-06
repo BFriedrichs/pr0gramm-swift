@@ -35,7 +35,7 @@ class ShowGalleryViewSegue: UIStoryboardSegue {
     }) { (Finished) -> Void in
       // swap container
       container.showGallery()
-      
+      destination.updateGallery()
 			source.cleanupVideo()
       
       source.removeFromParentViewController()
