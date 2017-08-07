@@ -16,7 +16,7 @@ class StringParser {
   }
   
   func attributedString() -> String {
-    var result = ""
+    let result = ""
     
     
     

@@ -11,6 +11,7 @@ import UIKit
 
 class TabController: UITabBarController, UITabBarControllerDelegate {
   
+  let api = API.sharedInstance
   let settings = SettingsStore.sharedInstance
   
   var _isVisible = true
@@ -36,12 +37,20 @@ class TabController: UITabBarController, UITabBarControllerDelegate {
     sender.image = self.settings.audio ? #imageLiteral(resourceName: "audio_on") : #imageLiteral(resourceName: "audio_off")
   }
   
+  @IBOutlet var userButton: UIBarButtonItem!
+  
   override func viewDidLoad() {
     self.delegate = self
     self.navigationController!.navigationBar.subviews.first?.alpha = 0.95
     self.toggleAudioButton.image = self.settings.audio ? #imageLiteral(resourceName: "audio_on") : #imageLiteral(resourceName: "audio_off")
-  
+
     deleteUnusedViews()
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    
+    self.userButton.image = self.api.userService.isLoggedIn ? #imageLiteral(resourceName: "user_on") : #imageLiteral(resourceName: "user_off")
   }
   
   func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
@@ -65,7 +74,7 @@ class TabController: UITabBarController, UITabBarControllerDelegate {
     
     var startAt = screenWidth
     
-    if toIndex == 0 {
+    if toIndex - selectedIndex < 0 {
       startAt = -startAt
     }
     

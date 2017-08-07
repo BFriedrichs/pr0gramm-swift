@@ -22,16 +22,16 @@ class ItemService {
 	var allowPreload = true
   
   init() {
-    self.url = URLService.apiUrl + path
+    self.url = Constants.getApiUrl() + path
     self.itemConnection = Connection(withUrl: self.url)
-    self.thumbConnection = Connection(withUrl: URLService.thumbUrl)
-    self.contentConnection = Connection(withUrl: URLService.imgUrl)
+    self.thumbConnection = Connection(withUrl: Constants.getThumbUrl())
+    self.contentConnection = Connection(withUrl: Constants.getImgUrl())
   }
   
   func getItems(withOptions option: ItemOption?, cb: @escaping ([Item]) -> Void) {
-   	let parameters = "/get\(option?.buildUrl() ?? "")"
+   	let parameters = "\(option?.buildUrl() ?? "")"
 
-    self.itemConnection.get(withParameters: parameters, parseJson: true, cb: { data in
+    self.itemConnection.get(atPath: "/get", withParameters: parameters, parseJson: true, cb: { data in
       let json = data as! [String: Any]
       if let itemData = json["items"] as? [[String: Any]] {
         var items = [Item]()
@@ -166,9 +166,9 @@ class ItemService {
   }
 
   func getItemMeta(forItem item: Item, cb: @escaping (StorageType) -> Void) {
-    let parameters = "/info?itemId=\(item.id)"
+    let parameters = "?itemId=\(item.id)"
     
-    self.itemConnection.get(withParameters: parameters, parseJson: true, cb: { data in
+    self.itemConnection.get(atPath: "/info", withParameters: parameters, parseJson: true, cb: { data in
       let json = data as! [String: Any]
       if let commentData = json["comments"] as? [[String: Any]] {
         for retrievedData in commentData {

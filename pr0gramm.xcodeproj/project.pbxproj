@@ -34,8 +34,13 @@
 		116E89D81F2EAC78003A69F2 /* ItemStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116E89CC1F2EAC78003A69F2 /* ItemStore.swift */; };
 		116E89D91F2EAC78003A69F2 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116E89CD1F2EAC78003A69F2 /* Store.swift */; };
 		116E89DA1F2EAC78003A69F2 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116E89CE1F2EAC78003A69F2 /* Tag.swift */; };
-		116E89DB1F2EAC78003A69F2 /* URLService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116E89CF1F2EAC78003A69F2 /* URLService.swift */; };
+		116E89DB1F2EAC78003A69F2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116E89CF1F2EAC78003A69F2 /* Constants.swift */; };
 		116E89DC1F2EAC78003A69F2 /* UserStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116E89D01F2EAC78003A69F2 /* UserStatus.swift */; };
+		118EF7961F3891340060D458 /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118EF7951F3891340060D458 /* RequestBuilder.swift */; };
+		118EF7981F3897FB0060D458 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118EF7971F3897FB0060D458 /* UserViewController.swift */; };
+		118EF79A1F3898B60060D458 /* ShowLoginSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118EF7991F3898B60060D458 /* ShowLoginSegue.swift */; };
+		118EF79E1F38C7FE0060D458 /* VoteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118EF79D1F38C7FE0060D458 /* VoteService.swift */; };
+		118EF7A01F38CBC50060D458 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118EF79F1F38CBC50060D458 /* Error.swift */; };
 		1191AE211F3689560060FBFF /* StringParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191AE201F3689560060FBFF /* StringParser.swift */; };
 		1191AE231F3718F50060FBFF /* UserLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191AE221F3718F50060FBFF /* UserLabel.swift */; };
 		1191AE251F372E300060FBFF /* SingleViewTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191AE241F372E300060FBFF /* SingleViewTagViewController.swift */; };
@@ -43,6 +48,9 @@
 		1191AE291F37377C0060FBFF /* TagStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191AE281F37377C0060FBFF /* TagStore.swift */; };
 		1191AE2C1F3738490060FBFF /* StorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191AE2B1F3738490060FBFF /* StorageType.swift */; };
 		1191AE2E1F3756180060FBFF /* LeftAlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191AE2D1F3756180060FBFF /* LeftAlignedCollectionViewFlowLayout.swift */; };
+		1191AE301F3769E70060FBFF /* UserLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191AE2F1F3769E70060FBFF /* UserLoginViewController.swift */; };
+		1191AE341F37AE8D0060FBFF /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191AE331F37AE8D0060FBFF /* UserService.swift */; };
+		1191AE361F37B7DA0060FBFF /* CookieJar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191AE351F37B7DA0060FBFF /* CookieJar.swift */; };
 		119AA1461F33850C00A1CA52 /* SingleViewInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119AA1451F33850C00A1CA52 /* SingleViewInfoViewController.swift */; };
 		119AA1481F33ACF900A1CA52 /* TimeAgo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119AA1471F33ACF900A1CA52 /* TimeAgo.swift */; };
 		119AA14C1F34BC1900A1CA52 /* SingleViewCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119AA14B1F34BC1900A1CA52 /* SingleViewCommentViewController.swift */; };
@@ -85,8 +93,13 @@
 		116E89CC1F2EAC78003A69F2 /* ItemStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemStore.swift; sourceTree = "<group>"; };
 		116E89CD1F2EAC78003A69F2 /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		116E89CE1F2EAC78003A69F2 /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
-		116E89CF1F2EAC78003A69F2 /* URLService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLService.swift; sourceTree = "<group>"; };
+		116E89CF1F2EAC78003A69F2 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		116E89D01F2EAC78003A69F2 /* UserStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserStatus.swift; sourceTree = "<group>"; };
+		118EF7951F3891340060D458 /* RequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestBuilder.swift; sourceTree = "<group>"; };
+		118EF7971F3897FB0060D458 /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
+		118EF7991F3898B60060D458 /* ShowLoginSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowLoginSegue.swift; sourceTree = "<group>"; };
+		118EF79D1F38C7FE0060D458 /* VoteService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoteService.swift; sourceTree = "<group>"; };
+		118EF79F1F38CBC50060D458 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		1191AE201F3689560060FBFF /* StringParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringParser.swift; sourceTree = "<group>"; };
 		1191AE221F3718F50060FBFF /* UserLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserLabel.swift; sourceTree = "<group>"; };
 		1191AE241F372E300060FBFF /* SingleViewTagViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleViewTagViewController.swift; sourceTree = "<group>"; };
@@ -94,6 +107,9 @@
 		1191AE281F37377C0060FBFF /* TagStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagStore.swift; sourceTree = "<group>"; };
 		1191AE2B1F3738490060FBFF /* StorageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageType.swift; sourceTree = "<group>"; };
 		1191AE2D1F3756180060FBFF /* LeftAlignedCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftAlignedCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		1191AE2F1F3769E70060FBFF /* UserLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserLoginViewController.swift; sourceTree = "<group>"; };
+		1191AE331F37AE8D0060FBFF /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		1191AE351F37B7DA0060FBFF /* CookieJar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CookieJar.swift; sourceTree = "<group>"; };
 		119AA1451F33850C00A1CA52 /* SingleViewInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleViewInfoViewController.swift; sourceTree = "<group>"; };
 		119AA1471F33ACF900A1CA52 /* TimeAgo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeAgo.swift; sourceTree = "<group>"; };
 		119AA14B1F34BC1900A1CA52 /* SingleViewCommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleViewCommentViewController.swift; sourceTree = "<group>"; };
@@ -157,6 +173,7 @@
 			children = (
 				113E99F11F2E133F005BF76A /* ShowSingleViewSegue.swift */,
 				113E99F61F2E2638005BF76A /* ShowGalleryViewSegue.swift */,
+				118EF7991F3898B60060D458 /* ShowLoginSegue.swift */,
 			);
 			name = Segue;
 			sourceTree = "<group>";
@@ -181,14 +198,10 @@
 		114C72C71F2BC59A007D6F34 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				118EF7A11F38CBDD0060D458 /* Helper */,
 				113F46CB1F2CEDB600693415 /* MultiSelect */,
 				113F46B91F2CB0C700693415 /* Color.swift */,
-				113E99EA1F2DE80C005BF76A /* Helper.swift */,
-				11F5FB431F2F7FDA00A12467 /* GifImage.swift */,
-				11F5FB471F2FBB3C00A12467 /* ActivityIndicator.swift */,
-				11F5FB491F2FC3B800A12467 /* Dialog.swift */,
-				119AA1471F33ACF900A1CA52 /* TimeAgo.swift */,
-				1191AE201F3689560060FBFF /* StringParser.swift */,
+				118EF79F1F38CBC50060D458 /* Error.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -201,6 +214,9 @@
 				116E89DF1F2EAC8B003A69F2 /* Models */,
 				116E89C51F2EAC78003A69F2 /* API.swift */,
 				116E89C71F2EAC78003A69F2 /* Connection.swift */,
+				118EF7951F3891340060D458 /* RequestBuilder.swift */,
+				116E89CF1F2EAC78003A69F2 /* Constants.swift */,
+				1191AE351F37B7DA0060FBFF /* CookieJar.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -209,7 +225,8 @@
 			isa = PBXGroup;
 			children = (
 				116E89CB1F2EAC78003A69F2 /* ItemService.swift */,
-				116E89CF1F2EAC78003A69F2 /* URLService.swift */,
+				1191AE331F37AE8D0060FBFF /* UserService.swift */,
+				118EF79D1F38C7FE0060D458 /* VoteService.swift */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -255,6 +272,19 @@
 			name = Store;
 			sourceTree = "<group>";
 		};
+		118EF7A11F38CBDD0060D458 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				113E99EA1F2DE80C005BF76A /* Helper.swift */,
+				11F5FB431F2F7FDA00A12467 /* GifImage.swift */,
+				11F5FB471F2FBB3C00A12467 /* ActivityIndicator.swift */,
+				119AA1471F33ACF900A1CA52 /* TimeAgo.swift */,
+				1191AE201F3689560060FBFF /* StringParser.swift */,
+				11F5FB491F2FC3B800A12467 /* Dialog.swift */,
+			);
+			name = Helper;
+			sourceTree = "<group>";
+		};
 		1191AE2A1F37383B0060FBFF /* Type */ = {
 			isa = PBXGroup;
 			children = (
@@ -275,6 +305,8 @@
 				113F46C81F2CCE4D00693415 /* SettingsViewController.swift */,
 				1152C9D91F2E6154006C90AE /* TabController.swift */,
 				116E89C01F2E93B9003A69F2 /* ContainerController.swift */,
+				1191AE2F1F3769E70060FBFF /* UserLoginViewController.swift */,
+				118EF7971F3897FB0060D458 /* UserViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -367,18 +399,21 @@
 			files = (
 				116E89DA1F2EAC78003A69F2 /* Tag.swift in Sources */,
 				116E89D71F2EAC78003A69F2 /* ItemService.swift in Sources */,
+				118EF79A1F3898B60060D458 /* ShowLoginSegue.swift in Sources */,
 				113E99F21F2E133F005BF76A /* ShowSingleViewSegue.swift in Sources */,
+				1191AE301F3769E70060FBFF /* UserLoginViewController.swift in Sources */,
 				116E89C11F2E93B9003A69F2 /* ContainerController.swift in Sources */,
 				1152C9DA1F2E6154006C90AE /* TabController.swift in Sources */,
 				116E89D61F2EAC78003A69F2 /* ItemOption.swift in Sources */,
 				116E89D91F2EAC78003A69F2 /* Store.swift in Sources */,
 				113E99EB1F2DE80C005BF76A /* Helper.swift in Sources */,
 				1191AE271F37336D0060FBFF /* TagCell.swift in Sources */,
-				116E89DB1F2EAC78003A69F2 /* URLService.swift in Sources */,
+				116E89DB1F2EAC78003A69F2 /* Constants.swift in Sources */,
 				1191AE291F37377C0060FBFF /* TagStore.swift in Sources */,
 				119AA14E1F34BC7700A1CA52 /* CommentCell.swift in Sources */,
 				119AA1461F33850C00A1CA52 /* SingleViewInfoViewController.swift in Sources */,
 				116E89D81F2EAC78003A69F2 /* ItemStore.swift in Sources */,
+				118EF7961F3891340060D458 /* RequestBuilder.swift in Sources */,
 				11F5FB441F2F7FDA00A12467 /* GifImage.swift in Sources */,
 				1191AE231F3718F50060FBFF /* UserLabel.swift in Sources */,
 				116E89D11F2EAC78003A69F2 /* API.swift in Sources */,
@@ -387,12 +422,14 @@
 				1191AE2C1F3738490060FBFF /* StorageType.swift in Sources */,
 				11DA5ADF1F2BE1600014E09D /* GalleryPostCell.swift in Sources */,
 				113F46C91F2CCE4D00693415 /* SettingsViewController.swift in Sources */,
+				118EF7981F3897FB0060D458 /* UserViewController.swift in Sources */,
 				113F46BA1F2CB0C700693415 /* Color.swift in Sources */,
 				119AA14C1F34BC1900A1CA52 /* SingleViewCommentViewController.swift in Sources */,
 				1100AC891F26896500428CBF /* GalleryViewController.swift in Sources */,
 				1191AE211F3689560060FBFF /* StringParser.swift in Sources */,
 				113F46BC1F2CC1D800693415 /* SettingsStore.swift in Sources */,
 				116E89D31F2EAC78003A69F2 /* Connection.swift in Sources */,
+				118EF79E1F38C7FE0060D458 /* VoteService.swift in Sources */,
 				11F5FB421F2F5E2C00A12467 /* MediaType.swift in Sources */,
 				116E89D21F2EAC78003A69F2 /* Comment.swift in Sources */,
 				11F5FB4A1F2FC3B800A12467 /* Dialog.swift in Sources */,
@@ -403,9 +440,12 @@
 				116E89DC1F2EAC78003A69F2 /* UserStatus.swift in Sources */,
 				113E99EE1F2E0D0B005BF76A /* SingleViewController.swift in Sources */,
 				11F5FB481F2FBB3C00A12467 /* ActivityIndicator.swift in Sources */,
+				1191AE341F37AE8D0060FBFF /* UserService.swift in Sources */,
 				1191AE2E1F3756180060FBFF /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
 				113F46CE1F2CEDC300693415 /* ATHMultiSelectionControlSegmentButton.swift in Sources */,
 				119AA1501F34D2FF00A1CA52 /* CommentStore.swift in Sources */,
+				1191AE361F37B7DA0060FBFF /* CookieJar.swift in Sources */,
+				118EF7A01F38CBC50060D458 /* Error.swift in Sources */,
 				116E89D41F2EAC78003A69F2 /* FlagStatus.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -107,7 +107,7 @@ class SingleViewTagViewController: UIViewController, UICollectionViewDataSource,
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     let cell = collectionView.cellForItem(at: indexPath) as! TagCell
     
-    let alert = UIAlertController(title: cell.tagLabel.text, message: "Für dieses Tag abstimmen.", preferredStyle: UIAlertControllerStyle.alert)
+    let alert = UIAlertController(title: cell.tagLabel.text, message: "Für dieses Tag abstimmen.", preferredStyle: .alert)
     alert.addAction(UIAlertAction(title: "Upvote", style: .default, handler: nil))
     alert.addAction(UIAlertAction(title: "Downvote", style: .default, handler: nil))
     alert.addAction(UIAlertAction(title: "Abbrechen", style: .cancel, handler: nil))

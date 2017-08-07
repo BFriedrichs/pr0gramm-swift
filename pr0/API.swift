@@ -11,12 +11,16 @@ import Foundation
 class API {
   static let sharedInstance = API()
 
-  let itemService : ItemService
+  let userService: UserService
+  let itemService: ItemService
+  let voteService: VoteService
   
   let itemStore: ItemStore
   
   fileprivate init() {
+    self.userService = UserService()
     self.itemService = ItemService()
+    self.voteService = VoteService()
     
     self.itemStore = ItemStore.sharedInstance
   }

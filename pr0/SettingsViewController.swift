@@ -35,7 +35,6 @@ class SettingsViewController: UIViewController, MultiSelectionSegmentedControlDe
     flagSelect = MultiSelectionSegmentedControl(items: ["SFW", "NSFW", "NSFL"])
     flagSelect.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: flagContainer.frame.size)
     flagSelect.tintColor = Color.Highlight
-    flagSelect.backgroundColor = Color.Back
     flagSelect.preserveOne = true
     flagSelect.delegate = self
 

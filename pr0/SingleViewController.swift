@@ -14,9 +14,14 @@ import AVFoundation
 class SingleViewController: UIViewController, UIScrollViewDelegate {
   
   @IBOutlet var contentView: UIScrollView!
+  
   @IBOutlet var imageView: UIImageView!
+  @IBOutlet var imageViewHeightConstraint: NSLayoutConstraint!
+  
   @IBOutlet var commentView: UIView!
   @IBOutlet var commentViewHeightConstraint: NSLayoutConstraint!
+  
+  @IBOutlet var infoView: UIView!
   
   @IBOutlet var tagView: UIView!
   @IBOutlet var tagViewHeightConstraint: NSLayoutConstraint!
@@ -24,13 +29,8 @@ class SingleViewController: UIViewController, UIScrollViewDelegate {
   var initSize: CGRect!
   var initImage: UIImage!
   var item: Item!
-  
-  @IBOutlet var imageViewHeightConstraint: NSLayoutConstraint!
-  
+
   let settings = SettingsStore.sharedInstance
-  @IBOutlet var infoView: UIView!
-  
-  var cachedItem: AVPlayerItem?
   
   var willClose = false
   var isAnimating = false
@@ -40,6 +40,7 @@ class SingleViewController: UIViewController, UIScrollViewDelegate {
   }
   
   var videoController: AVPlayerViewController!
+  var cachedItem: AVPlayerItem?
   var isVideo = false
   var videoPlayButton = UIImageView(image: #imageLiteral(resourceName: "playButton"))
   
@@ -60,7 +61,11 @@ class SingleViewController: UIViewController, UIScrollViewDelegate {
     NotificationCenter.default.addObserver(self, selector: #selector(setAudio), name: Notification.Name(rawValue: SettingsStore.AUDIO_CHANGED), object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(updateCommentSection), name: Notification.Name(rawValue: "comment"), object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(updateTagSection), name: Notification.Name(rawValue: "tag"), object: nil)
-    
+  
+  	updateChildViewControllers()
+  }
+  
+  func updateChildViewControllers() {
     for controller in self.childViewControllers {
       controller.viewDidLoad()
     }
@@ -339,7 +344,7 @@ class SingleViewController: UIViewController, UIScrollViewDelegate {
     self.item = item
     
     resetView()
-    viewWillAppear(false)
+    updateChildViewControllers()
     
     api.itemService.getItemContent(forItem: item, cb: { data in
       self.handleData(data)
@@ -366,6 +371,18 @@ class SingleViewController: UIViewController, UIScrollViewDelegate {
   
   // MARK: Zoom
   
+  func showAll() {
+    self.infoView.isHidden = false
+    self.tagView.isHidden = false
+    self.commentView.isHidden = false
+  }
+  
+  func hideAll() {
+    self.infoView.isHidden = true
+    self.tagView.isHidden = true
+    self.commentView.isHidden = true
+  }
+  
   func lockZoom() {
     contentView.maximumZoomScale = 1
     contentView.minimumZoomScale = 1
@@ -382,15 +399,16 @@ class SingleViewController: UIViewController, UIScrollViewDelegate {
   
   func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
     contentView.isDirectionalLockEnabled = false
+    hideAll()
   }
   
   func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
     if contentView.zoomScale < 1 {
       contentView.setZoomScale(1, animated: true)
       contentView.isDirectionalLockEnabled = true
-      self.updateCommentSection()
-      self.view.setNeedsLayout()
-      self.view.layoutIfNeeded()
+      // contentSize resets on zoom ...
+      contentView.contentSize = self.view.subviews[0].subviews[0].frame.size
+      showAll()
     }
   }
 

@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="5.6568542"
-     inkscape:cx="-11.263525"
-     inkscape:cy="937.3336"
+     inkscape:zoom="11.313708"
+     inkscape:cx="21.424553"
+     inkscape:cy="958.94977"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -64,12 +64,11 @@
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="sscsscsssszscccccs" />
     <path
-       sodipodi:nodetypes="scscs"
-       inkscape:connector-curvature="0"
-       id="path7094"
-       d="m 14.152664,38.29237 c 0,2.529427 3.372898,3.935246 4.851404,6.496094 1.47434,-2.553632 4.913405,-3.592685 4.913405,-6.525391 0,-3.421434 -4.888535,-3.078193 -4.888535,-0.273437 0,-2.8093 -4.876274,-3.201442 -4.876274,0.302734 z"
-       style="opacity:1;fill:#ee4d2e;fill-opacity:1;fill-rule:nonzero;stroke:#ee4d2e;stroke-width:0.13229167;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       inkscape:export-xdpi="256.64166"
-       inkscape:export-ydpi="256.64166" />
+       sodipodi:type="inkscape:offset"
+       inkscape:radius="0"
+       inkscape:original="M 7.5292969 35.046875 C 6.3102289 35.035695 5.0917969 35.814317 5.0917969 37.566406 C 5.0917969 40.095419 8.4644767 41.50049 9.9433594 44.060547 C 11.421978 41.499936 14.794922 40.095707 14.794922 37.566406 C 14.794922 35.814317 13.57649 35.035696 12.357422 35.046875 C 11.233562 35.057175 10.111803 35.740224 9.9433594 36.947266 C 9.7749614 35.740166 8.653188 35.057178 7.5292969 35.046875 z "
+       style="opacity:1;fill:#ee4d2e;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.26458332;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect7202"
+       d="m 7.5292969,35.046875 c -1.219068,-0.01118 -2.4375,0.767442 -2.4375,2.519531 0,2.529013 3.3726798,3.934084 4.8515625,6.494141 1.4786186,-2.560611 4.8515626,-3.96484 4.8515626,-6.494141 0,-1.752089 -1.218432,-2.53071 -2.4375,-2.519531 -1.12386,0.0103 -2.245619,0.693349 -2.4140626,1.900391 -0.168398,-1.2071 -1.2901714,-1.890088 -2.4140625,-1.900391 z" />
   </g>
 </svg>

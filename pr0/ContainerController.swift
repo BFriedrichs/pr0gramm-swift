@@ -18,16 +18,10 @@ class ContainerController: UIViewController {
   
   func showSingle() {
     self.view.bringSubview(toFront: self.singleContainer)
-    DispatchQueue.main.async {
-      //self.singleContainer.bringSubview(toFront: self.view)
-    }
   }
   
   func showGallery() {
     self.view.bringSubview(toFront: self.galleryContainer)
-    DispatchQueue.main.async {
-    	
-    }
   }
   
   override func addChildViewController(_ childController: UIViewController) {

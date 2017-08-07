@@ -8,17 +8,21 @@
 
 import Foundation
 
+typealias PostResponse = (isError: Bool, message: String, data: Any?)
+
 class Connection {
   let url: String
-  
+  let session: URLSession
+
   init(withUrl url: String) {
     self.url = url
+    self.session = URLSession.shared
   }
   
-  func get(withParameters parameters: String, parseJson: Bool = false, cb: @escaping (Any) -> Void) {
-    let postUrl = URL(string: url + parameters)!
+  func get(atPath path: String = "", withParameters parameters: String, parseJson: Bool = false, cb: @escaping (Any) -> Void) {
+    let getUrl = URL(string: url + path + parameters)!
     
-    let task = URLSession.shared.dataTask(with: postUrl) { (data, response, error) in
+    let task = session.dataTask(with: getUrl) { (data, response, error) in
       if error != nil {
         print(error ?? "Error occurred on connection.")
       } else {
@@ -30,6 +34,29 @@ class Connection {
             }
           } else {
             cb(usableData)
+          }
+        }
+      }
+    }
+    task.resume()
+  }
+  
+  func post(atPath path: String = "", withParameters parameters: String, cb: @escaping (PostResponse) -> Void) {
+    print("post: \(self.url + path) - \(parameters)")
+    let postURL = URL(string: self.url + path)
+    
+    var postRequest = RequestBuilder.buildRequest(withUrl: postURL!, method: "POST")
+    postRequest.httpBody = parameters.data(using: .utf8)
+    
+    let task = session.dataTask(with: postRequest) { data, response, error in
+      if error != nil {
+        print(error ?? "Error occurred on connection.")
+        cb((true, error.debugDescription, nil))
+      } else {
+        if let usableData = data {
+          let parsed = self.parseData(data: usableData)
+          if parsed != nil {
+            cb((false, "", parsed))
           }
         }
       }
