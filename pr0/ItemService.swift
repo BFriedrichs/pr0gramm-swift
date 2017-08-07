@@ -71,7 +71,6 @@ class ItemService {
       }
       
       self.preload(forItem: item)
-      
       return
     }
     
@@ -116,7 +115,6 @@ class ItemService {
       if nextNextItem != nil {
         self.getItemContent(forItem: nextNextItem!, preloading: true)
       }
-      
     }
   }
 	
@@ -186,10 +184,6 @@ class ItemService {
         cb(.Tag)
       }
     })
-  }
-  
-  func getItemTags(forItem item: Item, cb: ([Tag]) -> Void) {
-    
   }
   
 }

@@ -39,8 +39,9 @@
 		118EF7961F3891340060D458 /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118EF7951F3891340060D458 /* RequestBuilder.swift */; };
 		118EF7981F3897FB0060D458 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118EF7971F3897FB0060D458 /* UserViewController.swift */; };
 		118EF79A1F3898B60060D458 /* ShowLoginSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118EF7991F3898B60060D458 /* ShowLoginSegue.swift */; };
-		118EF79E1F38C7FE0060D458 /* VoteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118EF79D1F38C7FE0060D458 /* VoteService.swift */; };
 		118EF7A01F38CBC50060D458 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118EF79F1F38CBC50060D458 /* Error.swift */; };
+		118EF7A31F38D3E00060D458 /* TagService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118EF7A21F38D3E00060D458 /* TagService.swift */; };
+		118EF7A51F38D3F40060D458 /* CommentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118EF7A41F38D3F40060D458 /* CommentService.swift */; };
 		1191AE211F3689560060FBFF /* StringParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191AE201F3689560060FBFF /* StringParser.swift */; };
 		1191AE231F3718F50060FBFF /* UserLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191AE221F3718F50060FBFF /* UserLabel.swift */; };
 		1191AE251F372E300060FBFF /* SingleViewTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191AE241F372E300060FBFF /* SingleViewTagViewController.swift */; };
@@ -98,8 +99,9 @@
 		118EF7951F3891340060D458 /* RequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestBuilder.swift; sourceTree = "<group>"; };
 		118EF7971F3897FB0060D458 /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		118EF7991F3898B60060D458 /* ShowLoginSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowLoginSegue.swift; sourceTree = "<group>"; };
-		118EF79D1F38C7FE0060D458 /* VoteService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoteService.swift; sourceTree = "<group>"; };
 		118EF79F1F38CBC50060D458 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		118EF7A21F38D3E00060D458 /* TagService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagService.swift; sourceTree = "<group>"; };
+		118EF7A41F38D3F40060D458 /* CommentService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentService.swift; sourceTree = "<group>"; };
 		1191AE201F3689560060FBFF /* StringParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringParser.swift; sourceTree = "<group>"; };
 		1191AE221F3718F50060FBFF /* UserLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserLabel.swift; sourceTree = "<group>"; };
 		1191AE241F372E300060FBFF /* SingleViewTagViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleViewTagViewController.swift; sourceTree = "<group>"; };
@@ -226,7 +228,8 @@
 			children = (
 				116E89CB1F2EAC78003A69F2 /* ItemService.swift */,
 				1191AE331F37AE8D0060FBFF /* UserService.swift */,
-				118EF79D1F38C7FE0060D458 /* VoteService.swift */,
+				118EF7A21F38D3E00060D458 /* TagService.swift */,
+				118EF7A41F38D3F40060D458 /* CommentService.swift */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -355,7 +358,7 @@
 				TargetAttributes = {
 					1100AC821F26896500428CBF = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = A853N5G652;
+						DevelopmentTeam = U8Q3Q7S4Y2;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -403,6 +406,7 @@
 				113E99F21F2E133F005BF76A /* ShowSingleViewSegue.swift in Sources */,
 				1191AE301F3769E70060FBFF /* UserLoginViewController.swift in Sources */,
 				116E89C11F2E93B9003A69F2 /* ContainerController.swift in Sources */,
+				118EF7A31F38D3E00060D458 /* TagService.swift in Sources */,
 				1152C9DA1F2E6154006C90AE /* TabController.swift in Sources */,
 				116E89D61F2EAC78003A69F2 /* ItemOption.swift in Sources */,
 				116E89D91F2EAC78003A69F2 /* Store.swift in Sources */,
@@ -429,7 +433,6 @@
 				1191AE211F3689560060FBFF /* StringParser.swift in Sources */,
 				113F46BC1F2CC1D800693415 /* SettingsStore.swift in Sources */,
 				116E89D31F2EAC78003A69F2 /* Connection.swift in Sources */,
-				118EF79E1F38C7FE0060D458 /* VoteService.swift in Sources */,
 				11F5FB421F2F5E2C00A12467 /* MediaType.swift in Sources */,
 				116E89D21F2EAC78003A69F2 /* Comment.swift in Sources */,
 				11F5FB4A1F2FC3B800A12467 /* Dialog.swift in Sources */,
@@ -440,6 +443,7 @@
 				116E89DC1F2EAC78003A69F2 /* UserStatus.swift in Sources */,
 				113E99EE1F2E0D0B005BF76A /* SingleViewController.swift in Sources */,
 				11F5FB481F2FBB3C00A12467 /* ActivityIndicator.swift in Sources */,
+				118EF7A51F38D3F40060D458 /* CommentService.swift in Sources */,
 				1191AE341F37AE8D0060FBFF /* UserService.swift in Sources */,
 				1191AE2E1F3756180060FBFF /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
 				113F46CE1F2CEDC300693415 /* ATHMultiSelectionControlSegmentButton.swift in Sources */,
@@ -571,11 +575,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = A853N5G652;
+				DEVELOPMENT_TEAM = U8Q3Q7S4Y2;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = pr0/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "de.bjoern-friedrichs.pr0";
+				PRODUCT_BUNDLE_IDENTIFIER = "de.bjoern-friedrichs.pr0gramm";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -586,11 +590,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = A853N5G652;
+				DEVELOPMENT_TEAM = U8Q3Q7S4Y2;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = pr0/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "de.bjoern-friedrichs.pr0";
+				PRODUCT_BUNDLE_IDENTIFIER = "de.bjoern-friedrichs.pr0gramm";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;

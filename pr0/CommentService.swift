@@ -1,5 +1,5 @@
 //
-//  VoteService.swift
+//  CommentService.swift
 //  pr0gramm
 //
 //  Created by Björn Friedrichs on 07.08.17.
@@ -8,8 +8,7 @@
 
 import Foundation
 
-class VoteService {
-  
+class CommentService {
   init() {
     
   }
