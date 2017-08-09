@@ -8,8 +8,9 @@
 
 import Foundation
 
-class ItemService {
+class ItemService: Service {
   
+  let jar = CookieJar.shared
   var path = "items"
   
   let url: String
@@ -17,7 +18,8 @@ class ItemService {
   let thumbConnection: Connection
   let contentConnection: Connection
   
-  let itemStorage = ItemStore.sharedInstance
+  let itemStorage = ItemStore.shared
+  let voteStore = VoteStore.shared
   
 	var allowPreload = true
   
@@ -31,17 +33,19 @@ class ItemService {
   func getItems(withOptions option: ItemOption?, cb: @escaping ([Item]) -> Void) {
    	let parameters = "\(option?.buildUrl() ?? "")"
 
-    self.itemConnection.get(atPath: "/get", withParameters: parameters, parseJson: true, cb: { data in
-      let json = data as! [String: Any]
-      if let itemData = json["items"] as? [[String: Any]] {
-        var items = [Item]()
-        for retrievedData in itemData {
-          let item = Item(withData: retrievedData)
-          self.itemStorage.add(item)
-          items.append(item)
+    self.itemConnection.get(atPath: "/get", withParameters: parameters, parseJson: true, cb: { response in
+      if !response.error {
+        let json = response.data as! [String: Any]
+        if let itemData = json["items"] as? [[String: Any]] {
+          var items = [Item]()
+          for retrievedData in itemData {
+            let item = Item(withData: retrievedData)
+            self.itemStorage.add(item)
+            items.append(item)
+          }
+          self.itemStorage.forceCacheUpdate(withOption: option)
+          cb(items)
         }
-        self.itemStorage.forceCacheUpdate(withOption: option)
-        cb(items)
       }
     })
   }
@@ -51,10 +55,12 @@ class ItemService {
       cb(item.thumbData!)
     } else {
       let parameters = item.thumb
-      self.thumbConnection.get(withParameters: parameters, cb: { data in
-        if let data = data as? Data {
-         	item.thumbData = data
-          cb(data)
+      self.thumbConnection.get(withParameters: parameters, cb: { response in
+        if !response.error {
+          if let data = response.data as? Data {
+            item.thumbData = data
+            cb(data)
+          }
         }
       })
     }
@@ -69,34 +75,30 @@ class ItemService {
       if preloading {
         return
       }
-      
       self.preload(forItem: item)
       return
     }
-    
+  
     if item.contentData != nil {
       cb(item.contentData!)
       if !preloading {
         self.preload(forItem: item)
       }
     } else {
-      print(item.image)
       
       let parameters = item.image
-      self.contentConnection.get(withParameters: parameters, cb: { data in
-        if let data = data as? Data {
-          
-          if preloading {
-            print("preload done")
-           	item.contentData = data
-            self.itemStorage.addToCache(item)
-            
-            return
+      self.contentConnection.get(withParameters: parameters, cb: { response in
+        if !response.error {
+          if let data = response.data as? Data {
+            if preloading {
+              print("preload done")
+              item.contentData = data
+              self.itemStorage.addToCache(item)
+              return
+            }
+            cb(data)
+            self.preload(forItem: item)
           }
-          
-          cb(data)
-          
-          self.preload(forItem: item)
         }
       })
     }
@@ -166,24 +168,41 @@ class ItemService {
   func getItemMeta(forItem item: Item, cb: @escaping (StorageType) -> Void) {
     let parameters = "?itemId=\(item.id)"
     
-    self.itemConnection.get(atPath: "/info", withParameters: parameters, parseJson: true, cb: { data in
-      let json = data as! [String: Any]
-      if let commentData = json["comments"] as? [[String: Any]] {
-        for retrievedData in commentData {
-          let comment = Comment(withData: retrievedData)
-          item.commentStore.add(comment)
+    self.itemConnection.get(atPath: "/info", withParameters: parameters, parseJson: true, cb: { response in
+      if !response.error {
+        let json = response.data! as! [String: Any]
+        if let commentData = json["comments"] as? [[String: Any]] {
+          for retrievedData in commentData {
+            let comment = Comment(withData: retrievedData)
+            item.commentStore.add(comment)
+          }
+          cb(.Comment)
         }
-        cb(.Comment)
-      }
-      
-      if let tagData = json["tags"] as? [[String: Any]] {
-        for retrievedData in tagData {
-          let tag = Tag(withData: retrievedData)
-          item.tagStore.add(tag)
+        
+        if let tagData = json["tags"] as? [[String: Any]] {
+          for retrievedData in tagData {
+            let tag = Tag(withData: retrievedData)
+            item.tagStore.add(tag)
+          }
+          cb(.Tag)
         }
-        cb(.Tag)
+
       }
     })
   }
   
+  func vote(forItem item: Item, transitionTo transition: VoteStatus, cb: @escaping (PostResponse) -> Void) {
+    let _nonce = jar.getCurrentNonce()
+    if _nonce != nil {
+      let parameters = "id=\(item.id)&vote=\(transition.rawValue)&_nonce=\(_nonce!)"
+      self.itemConnection.post(atPath: "/vote", withParameters: parameters, cb: { response in
+        if !response.error {
+          self.voteStore.setVote(forElement: item, withTransition: transition)
+        }
+        cb((false ,!response.error))
+      })
+    } else {
+     cb((true, false))
+    }
+  }
 }

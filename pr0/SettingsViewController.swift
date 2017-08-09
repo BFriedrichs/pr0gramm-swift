@@ -26,7 +26,7 @@ class SettingsViewController: UIViewController, MultiSelectionSegmentedControlDe
   var flagSelect : MultiSelectionSegmentedControl!
   var flagMapping = [FlagStatus.SFW, FlagStatus.NSFW, FlagStatus.NSFL]
   
-  let settings = SettingsStore.sharedInstance
+  let settings = SettingsStore.shared
   
   override func viewDidLoad() {
 		super.viewDidLoad()

@@ -8,10 +8,12 @@
 
 import Foundation
 
-class Item: Storeable {
+class Item: Storable {
   
-  var id: Double
-  var promoted: Double
+  let type = StorageType.Item
+  
+  var id: UInt32
+  var promoted: UInt32
   var isPromoted = false
   
   var up: Int
@@ -43,8 +45,8 @@ class Item: Storeable {
   var tagStore = TagStore()
   
   init(withData data: [String: Any]) {
-    self.id = data["id"] as! Double
-    self.promoted = data["promoted"] as! Double
+    self.id = data["id"] as! UInt32
+    self.promoted = data["promoted"] as! UInt32
     if promoted != 0 {
       self.isPromoted = true
     }

@@ -11,10 +11,13 @@ import UIKit
 
 class UserViewController: UIViewController {
   
-  let api = API.sharedInstance
+  let api = API.shared
+  let settings = SettingsStore.shared
   
   @IBAction func logoutButtonPressed(_ sender: Any) {
     api.userService.logout()
+    settings.loginCookie = nil
+    settings.logOffset = 0
     self.navigationController?.popToRootViewController(animated: true)
   }
   

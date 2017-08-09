@@ -97,7 +97,7 @@
         <!--User Login View Controller-->
         <scene sceneID="XzY-mO-cxl">
             <objects>
-                <viewController storyboardIdentifier="UserView" id="Tp4-8t-tfg" customClass="UserLoginViewController" customModule="pr0gramm" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UserLoginView" id="Tp4-8t-tfg" customClass="UserLoginViewController" customModule="pr0gramm" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="dz7-hH-65c"/>
                         <viewControllerLayoutGuide type="bottom" id="KA3-fQ-HQB"/>
@@ -239,6 +239,14 @@
                             <constraint firstItem="wYV-Wz-Pau" firstAttribute="top" relation="greaterThanOrEqual" secondItem="iRQ-nq-aqt" secondAttribute="bottom" constant="16" id="bXv-d8-Cbo"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="kWS-RB-IJX">
+                        <barButtonItem key="rightBarButtonItem" title="Abbrechen" style="done" id="9f4-G7-G5n">
+                            <color key="tintColor" red="0.93333333330000001" green="0.30196078430000001" blue="0.18039215689999999" alpha="1" colorSpace="deviceRGB"/>
+                            <connections>
+                                <action selector="cancelButtonPressed:" destination="Tp4-8t-tfg" id="jTI-gY-rEx"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                     <connections>
                         <outlet property="errorMessage" destination="BV9-ED-5E4" id="h1F-01-UyK"/>
@@ -252,7 +260,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G1Q-cZ-ROX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="301.60000000000002" y="769.56521739130437"/>
+            <point key="canvasLocation" x="329" y="993"/>
         </scene>
         <!--User View Controller-->
         <scene sceneID="sZY-hv-68z">
@@ -269,18 +277,17 @@
                     </view>
                     <navigationItem key="navigationItem" id="kml-kx-o9I">
                         <barButtonItem key="rightBarButtonItem" title="Abmelden" style="done" id="RUH-YR-rqp">
+                            <color key="tintColor" red="0.93333333330000001" green="0.30196078430000001" blue="0.18039215689999999" alpha="1" colorSpace="deviceRGB"/>
                             <connections>
                                 <action selector="logoutButtonPressed:" destination="UV2-Tq-DOc" id="VU4-cQ-zEH"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <segue destination="Tp4-8t-tfg" kind="custom" identifier="LoginSegue" customClass="ShowLoginSegue" customModule="pr0gramm" customModuleProvider="target" id="tij-0c-riB"/>
-                    </connections>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FfU-SX-Ahu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-442" y="770"/>
+            <point key="canvasLocation" x="-442" y="993"/>
         </scene>
         <!--Bilder-->
         <scene sceneID="LWL-Cb-sxu">
@@ -461,7 +468,7 @@
                             </barButtonItem>
                             <barButtonItem image="user_off" id="ngx-1B-c48">
                                 <connections>
-                                    <segue destination="UV2-Tq-DOc" kind="show" id="IRj-zg-yko"/>
+                                    <action selector="userButtonPressed:" destination="hGr-Xv-0zA" id="hRL-Zl-90A"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
@@ -477,6 +484,8 @@
                         <outlet property="userButton" destination="ngx-1B-c48" id="ATm-jB-02K"/>
                         <segue destination="8o0-ad-3pb" kind="relationship" relationship="viewControllers" id="bnN-FL-Hni"/>
                         <segue destination="pBu-W3-nOp" kind="relationship" relationship="viewControllers" id="luC-5F-jFc"/>
+                        <segue destination="Tp4-8t-tfg" kind="custom" identifier="ShowLoginSegue" customClass="ShowLoginViewSegue" customModule="pr0gramm" customModuleProvider="target" id="cVE-oC-g9P"/>
+                        <segue destination="UV2-Tq-DOc" kind="custom" identifier="ShowUserSegue" customClass="ShowUserViewSegue" customModule="pr0gramm" customModuleProvider="target" id="y00-Av-ikJ"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xoc-vK-JX3" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -563,7 +572,7 @@
                                 <state key="normal" title="Button" image="plus_off"/>
                                 <state key="selected" image="plus_on"/>
                                 <connections>
-                                    <action selector="tappedPlus:" destination="ek7-nO-I9i" eventType="touchUpInside" id="Kft-OF-BBB"/>
+                                    <action selector="tappedPlus:" destination="ek7-nO-I9i" eventType="touchUpInside" id="grb-me-CUl"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QU4-fD-OKT">
@@ -575,7 +584,7 @@
                                 <state key="normal" image="minus_off"/>
                                 <state key="selected" image="minus_on"/>
                                 <connections>
-                                    <action selector="tappedMinus:" destination="ek7-nO-I9i" eventType="touchUpInside" id="aab-ay-Mv6"/>
+                                    <action selector="tappedMinus:" destination="ek7-nO-I9i" eventType="touchUpInside" id="xJ9-VT-Rzm"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="148" placeholderIntrinsicHeight="21" text="vor 19 Minuten von" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QfW-Bb-YeG">
@@ -614,7 +623,7 @@
                                 <state key="normal" image="fav_off"/>
                                 <state key="selected" image="fav_on"/>
                                 <connections>
-                                    <action selector="tappedFavorite:" destination="ek7-nO-I9i" eventType="touchUpInside" id="Hdz-2r-4lY"/>
+                                    <action selector="tappedFavorite:" destination="ek7-nO-I9i" eventType="touchUpInside" id="dCk-g6-8mc"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -683,6 +692,10 @@
                                                         <constraint firstAttribute="width" constant="25" id="zic-AW-MMq"/>
                                                     </constraints>
                                                     <state key="normal" image="plus_off"/>
+                                                    <state key="selected" image="plus_on"/>
+                                                    <connections>
+                                                        <action selector="upvoteButtonPressed:" destination="wVV-ih-c48" eventType="touchUpInside" id="mq7-Tg-tb3"/>
+                                                    </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wuy-FT-rSs">
                                                     <rect key="frame" x="8" y="45" width="25" height="25"/>
@@ -691,6 +704,10 @@
                                                         <constraint firstAttribute="width" constant="25" id="W6R-2b-gMz"/>
                                                     </constraints>
                                                     <state key="normal" image="minus_off"/>
+                                                    <state key="selected" image="minus_on"/>
+                                                    <connections>
+                                                        <action selector="downvoteButtonPressed:" destination="wVV-ih-c48" eventType="touchUpInside" id="xOr-jA-NmO"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="49.5" text="Lorem ipsum dolor sit amet, consectetur " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cUy-a1-e5y">
                                                     <rect key="frame" x="49" y="12" width="302" height="60"/>
@@ -754,8 +771,8 @@
                                         <color key="backgroundColor" red="0.086274509799999996" green="0.086274509799999996" blue="0.094117647060000004" alpha="1" colorSpace="calibratedRGB"/>
                                         <inset key="separatorInset" minX="40" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
-                                            <outlet property="comment" destination="cUy-a1-e5y" id="4du-zK-eo3"/>
                                             <outlet property="commentInsetConstraint" destination="p65-OK-BkL" id="3Zq-ZA-4pY"/>
+                                            <outlet property="commentLabel" destination="cUy-a1-e5y" id="tVd-ac-0eQ"/>
                                             <outlet property="downvote" destination="wuy-FT-rSs" id="FVQ-nW-vnt"/>
                                             <outlet property="points" destination="ECd-wc-rfa" id="WH6-T0-aLV"/>
                                             <outlet property="time" destination="l3L-Nz-ts5" id="to1-w0-8zD"/>
@@ -876,7 +893,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="BW2-v6-en6"/>
-        <segue reference="54z-xp-wex"/>
+        <segue reference="pU3-AB-6FW"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.93333333330000001" green="0.30196078430000001" blue="0.18039215689999999" alpha="1" colorSpace="deviceRGB"/>
 </document>

@@ -8,15 +8,18 @@
 
 import Foundation
 
-class Tag: Storeable {
-  var id: Double
+class Tag: Storable {
+  
+  let type = StorageType.Tag
+  
+  var id: UInt32
   
   var confidence: Double
   
   var tag: String
   
   init(withData data: [String: Any]) {
-    self.id = data["id"] as! Double
+    self.id = data["id"] as! UInt32
     
     self.confidence = data["confidence"] as! Double
     

@@ -12,7 +12,7 @@ import UIKit
 class SingleViewTagViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
   
   let reuseIdentifier = "tagCell"
-  let api = API.sharedInstance
+  let api = API.shared
 
   @IBOutlet var tagView: UICollectionView!
   @IBOutlet var tagViewHeightConstraint: NSLayoutConstraint!
@@ -85,12 +85,15 @@ class SingleViewTagViewController: UIViewController, UICollectionViewDataSource,
     
     let index = indexPath[1]
     let tag = item.tagStore.storage[index]
-    
+  	
+    cell.tag_ = tag
     cell.tagLabel.text = tag.tag
     
     cell.layer.cornerRadius = 5
     cell.layer.masksToBounds = true
 
+    cell.updateSelection()
+    
     return cell
   }
   
@@ -108,8 +111,29 @@ class SingleViewTagViewController: UIViewController, UICollectionViewDataSource,
     let cell = collectionView.cellForItem(at: indexPath) as! TagCell
     
     let alert = UIAlertController(title: cell.tagLabel.text, message: "Für dieses Tag abstimmen.", preferredStyle: .alert)
-    alert.addAction(UIAlertAction(title: "Upvote", style: .default, handler: nil))
-    alert.addAction(UIAlertAction(title: "Downvote", style: .default, handler: nil))
+    alert.addAction(UIAlertAction(title: "Upvote", style: .default, handler: { action in
+      let status = self.api.voteStore.getNextStatus(forElement: cell.tag_!, withTransition: .Upvote)
+      
+      self.api.tagService.vote(forTag: cell.tag_!, transitionTo: status, cb: { response in
+        if response.needsLogin {
+          Dialog.needsLogin()
+        } else {
+          cell.updateSelection()
+        }
+      })
+    }))
+    alert.addAction(UIAlertAction(title: "Downvote", style: .default, handler: { action in
+      let status = self.api.voteStore.getNextStatus(forElement: cell.tag_!, withTransition: .Downvote)
+      
+      self.api.tagService.vote(forTag: cell.tag_!, transitionTo: status, cb: { response in
+        if response.needsLogin {
+          Dialog.needsLogin()
+        } else {
+          cell.updateSelection()
+        }
+      })
+    }))
+    
     alert.addAction(UIAlertAction(title: "Abbrechen", style: .cancel, handler: nil))
     self.present(alert, animated: true, completion: nil)
   }
@@ -118,7 +142,8 @@ class SingleViewTagViewController: UIViewController, UICollectionViewDataSource,
   func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
     let cell = collectionView.cellForItem(at: indexPath)!
     DispatchQueue.main.async {
-    	cell.backgroundColor = Color.Highlight
+      cell.layer.borderColor = Color.Highlight.cgColor
+      cell.layer.borderWidth = 2
       cell.setNeedsDisplay()
     }
   }
@@ -127,7 +152,8 @@ class SingleViewTagViewController: UIViewController, UICollectionViewDataSource,
   func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
     let cell = collectionView.cellForItem(at: indexPath)!
     DispatchQueue.main.async {
-    	cell.backgroundColor = Color.BackLighter
+    	cell.layer.borderColor = Color.BackLighter.cgColor
+      cell.layer.borderWidth = 0
       cell.setNeedsDisplay()
     }
   }

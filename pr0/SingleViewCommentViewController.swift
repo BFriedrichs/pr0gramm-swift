@@ -13,7 +13,7 @@ class SingleViewCommentViewController: UIViewController, UITableViewDataSource, 
   var mainController: SingleViewController!
   var item: Item!
   
-  var api = API.sharedInstance
+  var api = API.shared
   
   @IBOutlet var tableView: UITableView!
   @IBOutlet var tableViewHeightConstraint: NSLayoutConstraint!
@@ -76,13 +76,16 @@ class SingleViewCommentViewController: UIViewController, UITableViewDataSource, 
     let ind = indexPath[1]
     let comment = comments[ind]
   	let cellInset = 12
-
-    cell.comment.text = comment.content
+    
+    cell.comment = comment
+    cell.commentLabel.text = comment.content
     cell.commentInsetConstraint.constant = CGFloat(comment.depth * cellInset)
     cell.user.setUser(userName: comment.user, status: comment.mark, isOp: comment.user == item.user)
     
     cell.points.text = "\(comment.up - comment.down)"
     cell.time.text = "\(timeAgoSinceDate(comment.createdDate, numericDates: true))"
+		
+    cell.updateSelection()
     
     if comments.count > ind + 1 {
       cell.separatorInset = UIEdgeInsets.init(top: 0, left: CGFloat(48 + comment.depth * cellInset), bottom: 0, right: 0)

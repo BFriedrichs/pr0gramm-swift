@@ -12,12 +12,12 @@ typealias loadCheck = (id: Int64, isLoaded: Bool)
 
 class GalleryViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
   
-  let api = API.sharedInstance
+  let api = API.shared
   
   let reuseIdentifier = "galleryPostCell"
   let padding : CGFloat = 3
   
-  let settings = SettingsStore.sharedInstance
+  let settings = SettingsStore.shared
   
   @IBOutlet var galleryView: UICollectionView!
   @IBOutlet var galleryPostLayout: UICollectionViewFlowLayout!

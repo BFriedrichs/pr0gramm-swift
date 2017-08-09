@@ -8,20 +8,25 @@
 
 import Foundation
 
-typealias PostResponse = (isError: Bool, message: String, data: Any?)
+typealias ConnectionResponse = (error: Bool, message: String, data: Any?)
+typealias PostResponse = (needsLogin: Bool, success: Bool)
 
 class Connection {
+  
   let url: String
   let session: URLSession
 
+  let jar: CookieJar
+  
   init(withUrl url: String) {
     self.url = url
     self.session = URLSession.shared
+    self.jar = CookieJar.shared
   }
   
-  func get(atPath path: String = "", withParameters parameters: String, parseJson: Bool = false, cb: @escaping (Any) -> Void) {
+  func get(atPath path: String = "", withParameters parameters: String, parseJson: Bool = false, cb: @escaping (ConnectionResponse) -> Void) {
     let getUrl = URL(string: url + path + parameters)!
-    
+    // print("get: \(url + path + parameters)")
     let task = session.dataTask(with: getUrl) { (data, response, error) in
       if error != nil {
         print(error ?? "Error occurred on connection.")
@@ -30,10 +35,10 @@ class Connection {
           if parseJson {
             let parsed = self.parseData(data: usableData)
 						if parsed != nil {
-             	cb(parsed!)
+             	cb((false, "", parsed!))
             }
           } else {
-            cb(usableData)
+            cb((false, "", usableData))
           }
         }
       }
@@ -41,7 +46,7 @@ class Connection {
     task.resume()
   }
   
-  func post(atPath path: String = "", withParameters parameters: String, cb: @escaping (PostResponse) -> Void) {
+  func post(atPath path: String = "", withParameters parameters: String, cb: @escaping (ConnectionResponse) -> Void) {
     print("post: \(self.url + path) - \(parameters)")
     let postURL = URL(string: self.url + path)
     
@@ -53,6 +58,7 @@ class Connection {
         print(error ?? "Error occurred on connection.")
         cb((true, error.debugDescription, nil))
       } else {
+        self.jar.updateMeCookie()
         if let usableData = data {
           let parsed = self.parseData(data: usableData)
           if parsed != nil {

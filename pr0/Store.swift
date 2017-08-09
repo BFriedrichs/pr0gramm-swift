@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Array where Element: Storeable {
+extension Array where Element: Storable {
   func contains(_ element: Element) -> Bool {
     for e in self {
       if e.id == element.id {
@@ -28,11 +28,22 @@ extension Array where Element: Storeable {
   }
 }
 
-protocol Storeable {
-  var id: Double { get }
+protocol Storable {
+  var id: UInt32 { get }
+  var type: StorageType { get }
 }
 
-class Store<T: Storeable> {
+class StorableElement: Storable {
+  let id: UInt32
+  let type: StorageType
+  
+  init(id: UInt32, type: StorageType) {
+    self.id = id
+    self.type = type
+  }
+}
+
+class Store<T: Storable> {
   var size: Int {
     return storage.count
   }

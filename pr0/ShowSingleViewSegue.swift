@@ -12,7 +12,7 @@ class ShowSingleViewSegue: UIStoryboardSegue {
 
   override func perform() {
     ActivityIndicator.show()
-    let api = API.sharedInstance
+    let api = API.shared
     
     let destination = (self.destination as! SingleViewController)
     let source = (self.source as! GalleryViewController)

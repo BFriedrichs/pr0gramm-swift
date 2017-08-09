@@ -9,7 +9,7 @@
 import Foundation
 
 final class ItemStore: Store<Item> {
-  static var sharedInstance = ItemStore()
+  static var shared = ItemStore()
 	
   var lastContent : [Item]?
   var lastOption : ItemOption?

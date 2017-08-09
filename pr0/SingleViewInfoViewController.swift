@@ -20,6 +20,7 @@ class SingleViewInfoViewController: UIViewController {
   
   var mainController: SingleViewController!
   var item: Item!
+  let api = API.shared
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -48,31 +49,73 @@ class SingleViewInfoViewController: UIViewController {
       self.benis.text = benisString
       self.view.sizeToFit()
     }
+    
+    updateSelection()
   }
   
-  @IBAction func tappedFavorite(_ sender: UIButton) {
-    if !sender.isSelected {
-      let anim = UIImageView(image: #imageLiteral(resourceName: "fav_on"))
-      sender.addSubview(anim)
-      anim.frame = CGRect(x: sender.frame.width / 2, y: sender.frame.height / 2, width: 0, height: 0)
-      UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 10, options: .curveEaseOut, animations: {
-        anim.frame = CGRect(x: 0, y: 0, width: sender.frame.width, height: sender.frame.height)
-      }) { finished in
-        anim.removeFromSuperview()
-        sender.isSelected = true
-      }
-    } else {
-      sender.isSelected = false
+  func updateSelection() {
+    let status = api.voteStore.getVote(forElement: self.item)
+    DispatchQueue.main.async {
+    	self.downvote.isSelected = false
+    	self.upvote.isSelected = false
+    	self.fav.isSelected = false
+    
+    	switch status {
+    	case .Like:
+    	  let anim = UIImageView(image: #imageLiteral(resourceName: "fav_on"))
+   	   	self.fav.addSubview(anim)
+    	  anim.frame = CGRect(x: self.fav.frame.width / 2, y: self.fav.frame.height / 2, width: 0, height: 0)
+   	   	UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 10, options: .curveEaseOut, animations: {
+        	anim.frame = CGRect(x: 0, y: 0, width: self.fav.frame.width, height: self.fav.frame.height)
+      	}) { finished in
+        	anim.removeFromSuperview()
+        	self.fav.isSelected = true
+      	}
+				self.upvote.isSelected = true
+      	break;
+    	case .Upvote:
+      	self.upvote.isSelected = true
+      	break;
+    	case .Downvote:
+      	self.downvote.isSelected = true
+      default: break
+    	}
     }
   }
   
+  @IBAction func tappedFavorite(_ sender: UIButton) {
+    let status = api.voteStore.getNextStatus(forElement: item, withTransition: .Like)
+    
+    self.api.itemService.vote(forItem: self.item, transitionTo: status, cb: { response in
+      if response.needsLogin {
+        Dialog.needsLogin()
+      } else {
+        self.updateSelection()
+      }
+    })
+  }
+  
   @IBAction func tappedMinus(_ sender: UIButton) {
-		sender.isSelected = !sender.isSelected
+    let status = api.voteStore.getNextStatus(forElement: item, withTransition: .Downvote)
+    
+    self.api.itemService.vote(forItem: self.item, transitionTo: status, cb: { response in
+      if response.needsLogin {
+        Dialog.needsLogin()
+      } else {
+				self.updateSelection()
+      }
+    })
   }
   
   @IBAction func tappedPlus(_ sender: UIButton) {
-    sender.isSelected = !sender.isSelected
+  	let status = api.voteStore.getNextStatus(forElement: item, withTransition: .Upvote)
+    
+    self.api.itemService.vote(forItem: self.item, transitionTo: status, cb: { response in
+      if response.needsLogin {
+        Dialog.needsLogin()
+      } else {
+        self.updateSelection()
+      }
+    })
   }
-  
-  
 }

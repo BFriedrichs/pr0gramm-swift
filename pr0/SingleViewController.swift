@@ -30,7 +30,7 @@ class SingleViewController: UIViewController, UIScrollViewDelegate {
   var initImage: UIImage!
   var item: Item!
 
-  let settings = SettingsStore.sharedInstance
+  let settings = SettingsStore.shared
   
   var willClose = false
   var isAnimating = false
@@ -44,7 +44,7 @@ class SingleViewController: UIViewController, UIScrollViewDelegate {
   var isVideo = false
   var videoPlayButton = UIImageView(image: #imageLiteral(resourceName: "playButton"))
   
-  let api = API.sharedInstance
+  let api = API.shared
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -296,7 +296,7 @@ class SingleViewController: UIViewController, UIScrollViewDelegate {
           }
         } else {
           ActivityIndicator.hide()
-          Dialog.noOlderItem(self)
+          Dialog.noOlderItem()
         }
       })
     } else {
@@ -307,7 +307,7 @@ class SingleViewController: UIViewController, UIScrollViewDelegate {
           }
         } else {
           ActivityIndicator.hide()
-          Dialog.noNewerItem(self)
+          Dialog.noNewerItem()
         }
       })
     }

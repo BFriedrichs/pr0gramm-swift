@@ -10,9 +10,9 @@ import Foundation
 import UIKit
 
 class UserLoginViewController: UIViewController {
-  
-  weak var userViewControllerDelegate: UserViewController?
-  let api = API.sharedInstance
+
+  let api = API.shared
+  let settings = SettingsStore.shared
   
   @IBOutlet var keyboardViewHeightConstraint: NSLayoutConstraint!
   
@@ -37,10 +37,27 @@ class UserLoginViewController: UIViewController {
 
     api.userService.login(withName: usernameField.text ?? "", password: passwordField.text ?? "", cb: { success in
       if self.api.userService.isLoggedIn {
+        let cookie = CookieJar.shared.getMeCookie()
+        if cookie != nil {
+          SettingsStore.shared.loginCookie = cookie!.original
+        }
+
+        self.api.syncService.sync(cb: { response in
+          if response.success {
+            self.settings.logOffset = response.offset
+          }
+        })
+        
         self.navigationController!.dismiss(animated: true, completion: {})
       } else {
         self.showError(error: Error.LOGIN_FAILED)
       }
+    })
+  }
+  
+  
+  @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
+    self.navigationController!.dismiss(animated: true, completion: {
     })
   }
   
@@ -66,13 +83,8 @@ class UserLoginViewController: UIViewController {
       self.view.layoutIfNeeded()
     })
   }
-  
-  func cancel() {
-    userViewControllerDelegate!.navigationController?.popToRootViewController(animated: false)
-    self.navigationController!.dismiss(animated: true, completion: {
-    })
-  }
-  
+
+
   func showError(error: String) {
     DispatchQueue.main.async {
       self.errorMessage.text = error

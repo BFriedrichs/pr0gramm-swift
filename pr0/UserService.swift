@@ -8,7 +8,7 @@
 
 import Foundation
 
-class UserService {
+class UserService: Service {
   
   let path = "user"
   
@@ -27,17 +27,17 @@ class UserService {
   }
   
   init() {
-    self.jar = CookieJar.sharedInstance
+    self.jar = CookieJar.shared
     self.userConnection = Connection(withUrl: Constants.getApiUrl() + path)
   }
   
   func login(withName name: String, password: String, cb: @escaping (Bool) -> Void) {
     let parameters = "name=\(name)&password=\(password)"
     self.userConnection.post(atPath: "/login", withParameters: parameters, cb: { response in
-      if response.isError {
+      if response.error {
         print(response.message)
       } else {
-        _ = self.jar.getMeCookie()
+        self.jar.updateMeCookie()
   			cb(true)
       }
     })

@@ -11,7 +11,7 @@ import UIKit
 
 class ActivityIndicator {
   
-  static let sharedInstance = ActivityIndicator()
+  static let shared = ActivityIndicator()
   
   var activity: UIActivityIndicatorView!
   
@@ -37,14 +37,14 @@ class ActivityIndicator {
   }
   
   static func show() {
-    UIApplication.shared.keyWindow?.addSubview(ActivityIndicator.sharedInstance.activity)
-    ActivityIndicator.sharedInstance.activity.startAnimating()
+    UIApplication.shared.keyWindow?.addSubview(ActivityIndicator.shared.activity)
+    ActivityIndicator.shared.activity.startAnimating()
   }
   
   static func hide() {
     DispatchQueue.main.async {
-      ActivityIndicator.sharedInstance.activity.stopAnimating()
-      ActivityIndicator.sharedInstance.activity.removeFromSuperview()
+      ActivityIndicator.shared.activity.stopAnimating()
+      ActivityIndicator.shared.activity.removeFromSuperview()
     }
   }
 }

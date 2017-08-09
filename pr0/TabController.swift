@@ -11,8 +11,8 @@ import UIKit
 
 class TabController: UITabBarController, UITabBarControllerDelegate {
   
-  let api = API.sharedInstance
-  let settings = SettingsStore.sharedInstance
+  let api = API.shared
+  let settings = SettingsStore.shared
   
   var _isVisible = true
   var isVisible: Bool {
@@ -38,18 +38,33 @@ class TabController: UITabBarController, UITabBarControllerDelegate {
   }
   
   @IBOutlet var userButton: UIBarButtonItem!
+  @IBAction func userButtonPressed(_ sender: UIBarButtonItem) {
+    if api.userService.isLoggedIn {
+      self.performSegue(withIdentifier: "ShowUserSegue", sender: nil)
+    } else {
+      self.performSegue(withIdentifier: "ShowLoginSegue", sender: nil)
+    }
+  }
   
   override func viewDidLoad() {
     self.delegate = self
     self.navigationController!.navigationBar.subviews.first?.alpha = 0.95
     self.toggleAudioButton.image = self.settings.audio ? #imageLiteral(resourceName: "audio_on") : #imageLiteral(resourceName: "audio_off")
-
+	
+    if api.userService.isLoggedIn {
+      api.syncService.sync(cb: { response in
+        if response.success {
+          self.settings.logOffset = response.offset
+        }
+      })
+    }
+    
     deleteUnusedViews()
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    
+
     self.userButton.image = self.api.userService.isLoggedIn ? #imageLiteral(resourceName: "user_on") : #imageLiteral(resourceName: "user_off")
   }
   

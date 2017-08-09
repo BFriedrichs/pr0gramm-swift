@@ -62,11 +62,11 @@ final class CommentStore: Store<Comment> {
     return self.storage
   }
 
-  func findComment(withId id: Double) -> Comment? {
+  func findComment(withId id: UInt32) -> Comment? {
     return self.storage.filter({ return id == $0.id })[0]
   }
   
-  func findCommentIndex(withId id: Double, inList list: [Comment]) -> Int {
+  func findCommentIndex(withId id: UInt32, inList list: [Comment]) -> Int {
     return list.index(where: { return $0.id == id })!
   }
 }

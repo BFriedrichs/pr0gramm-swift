@@ -15,8 +15,9 @@ struct Pr0Cookie {
   let a: Int
   let pp: Double
   let paid: Bool
+  let original: HTTPCookie
   
-  init(withData data: [String: Any]) {
+  init(withData data: [String: Any], original: HTTPCookie) {
     if let t = data["t"] {
       self.t = t as! Int
     } else {
@@ -28,11 +29,12 @@ struct Pr0Cookie {
     self.a = data["a"] as! Int
     self.pp = data["pp"] as! Double
     self.paid = data["paid"] as! Bool
+    self.original = original
   }
 }
 
 class CookieJar {
-  static let sharedInstance = CookieJar()
+  static let shared = CookieJar()
   
   var meCookie: Pr0Cookie?
   
@@ -47,6 +49,10 @@ class CookieJar {
   }
   
   func getMeCookie() -> Pr0Cookie? {
+    return self.meCookie
+  }
+  
+  func updateMeCookie() {
     let cookies = HTTPCookieStorage.shared.cookies
     for cookie in cookies! {
       if cookie.name == "me" {
@@ -54,15 +60,30 @@ class CookieJar {
         let decoded = val.removingPercentEncoding
         do {
           let parsed = try JSONSerialization.jsonObject(with: decoded!.data(using: .utf8)!)
-          let cookie = Pr0Cookie(withData: parsed as! [String: Any])
+          let cookie = Pr0Cookie(withData: parsed as! [String: Any], original: cookie)
           self.meCookie = cookie
-          return self.meCookie
         }
         catch {
           
         }
       }
     }
-    return nil
+  }
+  
+  func getMeHTTPCookie() -> HTTPCookie? {
+    guard meCookie != nil else {
+      return nil
+    }
+
+    return meCookie!.original
+  }
+  
+  func getCurrentNonce() -> String? {
+    guard meCookie != nil else {
+      return nil
+    }
+    
+    let id = meCookie!.id
+    return id.substring(to: id.index(id.startIndex, offsetBy: 16))
   }
 }

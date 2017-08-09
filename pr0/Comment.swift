@@ -8,10 +8,13 @@
 
 import Foundation
 
-class Comment: Storeable {
-  var id: Double
+class Comment: Storable {
   
-  var parent: Double
+  let type = StorageType.Comment
+  
+  var id: UInt32
+  
+  var parent: UInt32
   var hasParent = false
   var depth = 0
   var content: String
@@ -28,9 +31,9 @@ class Comment: Storeable {
   var mark: UserStatus
   
   init(withData data: [String: Any]) {
-    self.id = data["id"] as! Double
+    self.id = data["id"] as! UInt32
     
-    self.parent = data["parent"] as! Double
+    self.parent = data["parent"] as! UInt32
     if(self.parent != 0) {
       self.hasParent = true
     }

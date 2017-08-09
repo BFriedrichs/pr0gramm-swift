@@ -11,12 +11,12 @@ import Foundation
 struct ItemOption {
   var flags: [FlagStatus]
   var promoted: Bool
-  var older: Double?
-  var newer: Double?
+  var older: UInt32?
+  var newer: UInt32?
   
   func buildUrl() -> String {
-    let olderStr = older != nil ? "&older=\(Int(older!))" : ""
-    let newerStr = newer != nil ? "&newer=\(Int(newer!))" : ""
+    let olderStr = older != nil ? "&older=\(UInt32(older!))" : ""
+    let newerStr = newer != nil ? "&newer=\(UInt32(newer!))" : ""
     return "?flags=\(flags.reduce(0, { return $0 + $1.rawValue }))" +
       			"&promoted=\(promoted ? 1 : 0)" +
     				"\(olderStr)" +
@@ -28,12 +28,12 @@ struct ItemOption {
     self.promoted = promoted
   }
   
-  init(flags: [FlagStatus], promoted: Bool, older: Double) {
+  init(flags: [FlagStatus], promoted: Bool, older: UInt32) {
     self.init(flags: flags, promoted: promoted)
     self.older = older
   }
   
-  init(flags: [FlagStatus], promoted: Bool, newer: Double) {
+  init(flags: [FlagStatus], promoted: Bool, newer: UInt32) {
     self.init(flags: flags, promoted: promoted)
     self.newer = older
   }
